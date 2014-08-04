@@ -37,6 +37,11 @@ WORKDIR /import/
 ADD ./startup.sh /startup.sh
 RUN chmod +x /startup.sh
 
+# Install packages
+ADD ./packages.R /tmp/packages.R
+RUN Rscript /tmp/packages.R
+RUN rm /tmp/packages.R
+
 # RStudio will run on port 8787, export this port to the host system
 EXPOSE 8787
 
