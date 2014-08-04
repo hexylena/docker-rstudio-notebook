@@ -1,10 +1,10 @@
-Docker IPython Container
+Docker RStudio Container
 ========================
 
-IPython running in a docker container. This image can be used to integrate IPython into Galaxy.
+RStudio running in a docker container. This image can be used to integrate RStudio into Galaxy.
 A variety of different packages are pre-installed and can be used right away.
 
-This docker container is used by the [Galaxy-IPython project](https://github.com/bgruening/galaxy-ipython) and can be installed from the [docker.io index](https://registry.hub.docker.com/u/bgruening/docker-ipython-notebook/).
+This docker container is used by the [Galaxy-RStudio project](https://github.com/erasche/galaxy-rstudio).
 
 Usage
 =====
@@ -13,18 +13,13 @@ Usage
 
  [Docker](https://www.docker.com) is a pre-requirement for this project. You can build the container with:
  ```bash
-  docker build -t ipython-notebook . 
+  docker build -t rstudio-notebook . 
  ```
  The build process can take some time, but if finished you can run your container with:
  ```bash
-  docker run -p 7777:6789 -v /home/user/foo/:/import/ -t ipython-notebook
+  docker run -p 7777:8787 -v /home/user/foo/:/import/ -t rstudio-notebook
  ```
- and you will have a running [IPython Notebook](http://ipython.org/notebook.html) instance on ``http://localhost:7777/ipython/``.
-
-* Run a pre-build image from docker registry
-
- ``docker run -p 7777:6789 -v /home/user/foo/:/import/ bgruening/docker-ipython-notebook ``  
-
+ and you will have a running [RStudio](http://rstudio.com) instance on ``http://localhost:8787/``.
 
 
 Authors
