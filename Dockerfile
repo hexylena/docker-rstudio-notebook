@@ -6,7 +6,8 @@ MAINTAINER Eric Rasche <rasche.eric@yandex.ru>
 RUN DEBIAN_FRONTEND=noninteractive apt-get update
 
 # Ensure cran is available
-RUN (echo "deb http://cran.mtu.edu/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9)
+RUN (echo "deb http://cran.mtu.edu/bin/linux/debian squeeze-cran/" >> /etc/apt/sources.list && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9)
+RUN (echo "deb-src http://http.debian.net/debian squeeze main" >> /etc/apt/sources.list && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9)
 
 # Install packages
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q r-base r-base-dev
@@ -17,6 +18,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q cron
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q sudo
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q libcurl4-openssl-dev curl
+#RUN DEBIAN_FRONTEND=noninteractive apt-get build-dep -y -q libcurl4-openssl-dev
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q libxml2-dev
 
 RUN wget http://download2.rstudio.org/rstudio-server-0.98.987-amd64.deb
