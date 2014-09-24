@@ -20,6 +20,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q libcurl4-openssl-dev curl
 #RUN DEBIAN_FRONTEND=noninteractive apt-get build-dep -y -q libcurl4-openssl-dev
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q libxml2-dev
+RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q nginx
 
 RUN wget http://download2.rstudio.org/rstudio-server-0.98.987-amd64.deb
 RUN dpkg -i rstudio-server-0.98.987-amd64.deb
@@ -46,6 +47,7 @@ WORKDIR /import/
 
 ADD ./startup.sh /startup.sh
 RUN chmod +x /startup.sh
+ADD ./proxy.conf /proxy.conf
 
 # RStudio will run on port 8787, export this port to the host system
 EXPOSE 8787
