@@ -15,7 +15,7 @@ USERNAME=$(grep 'notebook_username' ${CONF_FILE} | sed 's/notebook_username: //g
 PASSWORD=$(grep 'notebook_password' ${CONF_FILE} | sed 's/notebook_password: //g')
 DOCKER_PORT=$(grep 'docker_port' ${CONF_FILE} | sed 's/docker_port: //g')
 # Req latest conf.yaml spec
-CORS_ORIGIN=$(grep 'cors_origin' ${CONF_FILE} | sed '/cors_origin: //g')
+CORS_ORIGIN=$(grep 'cors_origin' ${CONF_FILE} | sed 's/cors_origin: //g')
 
 sed -i "s/ '\*'; # IE_CORS_ORIGIN/ '${CORS_ORIGIN}';/" /proxy.conf;
 sed -i "s/ 80; # IE_DOCKER_PORT/ ${DOCKER_PORT};/" /proxy.conf;
