@@ -110,7 +110,7 @@ if __name__ == '__main__':
         raise Exception("Wrong number of arguments")
 
     if method == 'get':
-        get(arg)
+        get(int(arg))
     elif method == 'put':
         if second_arg is not None:
             put(arg, file_type=second_arg)
