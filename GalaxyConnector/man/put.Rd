@@ -3,12 +3,12 @@
 \alias{put}
 \title{put}
 \usage{
-put(filename)
+put(filename, file_type = "auto")
 }
 \arguments{
-\item{path}{to file}
+\item{Path}{to file}
 }
 \description{
-This function uploads a dataset to the current galaxy history
+This function uploads a dataset to the current Galaxy history
 }
 

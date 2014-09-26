@@ -12,9 +12,11 @@ RUN (echo "deb-src http://http.debian.net/debian squeeze main" >> /etc/apt/sourc
 # Install packages
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q r-base r-base-dev
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q dpkg wget psmisc libssl0.9.8 cron sudo libcurl4-openssl-dev curl libxml2-dev nginx python
+RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q python-pip
 RUN wget http://download2.rstudio.org/rstudio-server-0.98.987-amd64.deb
 RUN dpkg -i rstudio-server-0.98.987-amd64.deb
 RUN rm /rstudio-server-0.98.987-amd64.deb
+RUN pip install requests
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get autoremove -y
 RUN DEBIAN_FRONTEND=noninteractive apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -39,10 +41,8 @@ WORKDIR /import/
 COPY ./startup.sh /startup.sh
 RUN chmod +x /startup.sh
 COPY ./proxy.conf /proxy.conf
-COPY ./upload_to_history.py /usr/local/bin/upload_to_history.py
-
-# RStudio will run on port 8787, export this port to the host system
-EXPOSE 8787
+COPY ./galaxy.py /usr/local/bin/galaxy.py
+COPY ./Rprofile.site /usr/lib/R/etc/Rprofile.site
 
 # Start IPython Notebook
 CMD /startup.sh

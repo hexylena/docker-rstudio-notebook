@@ -1,0 +1,3 @@
+library("yaml")
+library("GalaxyConnector")
+.First <- function() cat("\n   Welcome to the Galaxy R Interactive Environment!\n\nThe convenience functions put() and get() are available to you to interact with your current Galaxy history.")
