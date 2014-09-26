@@ -43,6 +43,7 @@ COPY ./startup.sh /startup.sh
 RUN chmod +x /startup.sh
 COPY ./proxy.conf /proxy.conf
 COPY ./galaxy.py /usr/local/bin/galaxy.py
+RUN chmod +x /usr/local/bin/galaxy.py
 COPY ./Rprofile.site /usr/lib/R/etc/Rprofile.site
 
 # Start IPython Notebook
