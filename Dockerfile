@@ -16,8 +16,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q
 RUN wget http://download2.rstudio.org/rstudio-server-0.98.987-amd64.deb
 RUN dpkg -i rstudio-server-0.98.987-amd64.deb
 RUN rm /rstudio-server-0.98.987-amd64.deb
-RUN pip install requests
+RUN pip install bioblend
 
+RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q net-tools
 RUN DEBIAN_FRONTEND=noninteractive apt-get autoremove -y
 RUN DEBIAN_FRONTEND=noninteractive apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

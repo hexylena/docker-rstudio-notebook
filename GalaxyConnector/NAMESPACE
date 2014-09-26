@@ -1,1 +1,1 @@
-export(put, get)
+export(gx_put, gx_get)

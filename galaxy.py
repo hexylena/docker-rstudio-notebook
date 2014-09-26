@@ -6,7 +6,7 @@ import yaml
 import subprocess
 import sys
 
-def _get_conf( config_file = 'conf.yaml' ):
+def _get_conf( config_file = '/import/conf.yaml' ):
     with open(config_file, 'rb') as handle:
         conf = yaml.load(handle)
     return conf
@@ -102,10 +102,10 @@ def get( dataset_id ):
 
 if __name__ == '__main__':
     if len(sys.argv) == 3:
-        method, arg = sys.argv[1:2]
+        method, arg = sys.argv[1:3]
         second_arg = None
     elif len(sys.argv) == 4:
-        method, arg, second_arg = sys.argv[1:3]
+        method, arg, second_arg = sys.argv[1:4]
     else:
         raise Exception("Wrong number of arguments")
 
