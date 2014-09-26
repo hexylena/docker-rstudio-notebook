@@ -19,4 +19,5 @@ gx_put <- function(filename, file_type="auto"){
 gx_get <- function(file_id){
     command <- paste("python", "/usr/local/bin/galaxy.py", "get", file_id)
     system(command)
+    return(paste("/import/", file_id, sep=""))
 }
