@@ -27,7 +27,9 @@ chown $USERNAME:$USERNAME /import/ -R
 # Start the servers
 service rstudio-server start
 service nginx restart
-sleep 1
-curl localhost:8787/auth-public-key > /import/rserver_pub_key
+
+echo 'library("yaml")
+library("GalaxyConnector")' > /import/.Rprofile
+
 chmod 777 /import/ -R
 tail -f /var/log/nginx/*
