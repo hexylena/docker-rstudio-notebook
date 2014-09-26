@@ -18,7 +18,7 @@ DOCKER_PORT=$(grep 'docker_port' ${CONF_FILE} | sed 's/docker_port: //g')
 CORS_ORIGIN=$(grep 'cors_origin' ${CONF_FILE} | sed 's/cors_origin: //g')
 
 sed -i "s| '\*'; # IE_CORS_ORIGIN| '${CORS_ORIGIN}';|" /proxy.conf;
-sed -i "s/ 80; # IE_DOCKER_PORT/ ${DOCKER_PORT};/" /proxy.conf;
+sed -i "s/IE_PORT/${DOCKER_PORT}/" /proxy.conf;
 cp /proxy.conf /etc/nginx/sites-enabled/default
 # Create user
 useradd -p `openssl passwd -1 $PASSWORD` $USERNAME -d /import/
