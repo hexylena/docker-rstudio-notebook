@@ -33,7 +33,7 @@ RUN chmod +x /monitor_traffic.sh
 
 # /import will be the universal mount-point for IPython
 # The Galaxy instance can copy in data that needs to be present to the IPython webserver
-RUN mkdir /import 
+RUN mkdir /import
 
 COPY ./startup.sh /startup.sh
 COPY ./proxy.conf /proxy.conf
@@ -43,7 +43,7 @@ COPY ./Rprofile.site /usr/lib/R/etc/Rprofile.site
 RUN chmod +x /startup.sh
 RUN chmod +x /usr/local/bin/galaxy.py
 
-VOLUME ["/import/"]
+VOLUME ["/import"]
 WORKDIR /import/
 # Start IPython Notebook
 CMD /startup.sh
