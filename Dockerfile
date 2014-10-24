@@ -9,6 +9,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing
 RUN (echo "deb http://cran.mtu.edu/bin/linux/debian squeeze-cran/" >> /etc/apt/sources.list && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9)
 RUN (echo "deb-src http://http.debian.net/debian squeeze main" >> /etc/apt/sources.list && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9)
 
+RUN DEBIAN_FRONTEND=noninteractive apt-get update -q
+
 # Install packages
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q \
     r-base r-base-dev dpkg wget psmisc libssl0.9.8 cron sudo libcurl4-openssl-dev \
