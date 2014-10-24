@@ -5,6 +5,14 @@ MAINTAINER Eric Rasche <rasche.eric@yandex.ru>
 # Install all requirements and clean up afterwards
 RUN DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing
 
+RUN apt-get install -y locales
+RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
+RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
+
+# Set default locale for the environment
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
+
 # Ensure cran is available
 RUN (echo "deb http://cran.mtu.edu/bin/linux/debian squeeze-cran/" >> /etc/apt/sources.list && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9)
 RUN (echo "deb-src http://http.debian.net/debian squeeze main" >> /etc/apt/sources.list && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9)
