@@ -27,7 +27,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q
     DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q net-tools && DEBIAN_FRONTEND=noninteractive apt-get autoremove -y  && \
     DEBIAN_FRONTEND=noninteractive apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN wget http://download2.rstudio.org/rstudio-server-0.98.987-amd64.deb && dpkg -i rstudio-server-0.98.987-amd64.deb && rm /rstudio-server-0.98.987-amd64.deb
+# Install rstudio-server
+RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q lsb-release
+RUN wget http://download2.rstudio.org/rstudio-server-0.98.1081-amd64.deb && dpkg -i rstudio-server-0.98.1081-amd64.deb && rm /rstudio-server-0.98.1081-amd64.deb
 
 ADD rsession.conf /etc/rstudio/rsession.conf
 
