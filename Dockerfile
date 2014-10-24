@@ -24,10 +24,11 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q
     r-base r-base-dev dpkg wget psmisc libssl0.9.8 cron sudo libcurl4-openssl-dev \
     curl libxml2-dev nginx python python-pip && \
     pip install bioblend argparse && \
-    DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q net-tools && DEBIAN_FRONTEND=noninteractive apt-get autoremove -y  && \
+    DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q net-tools lsb-release && DEBIAN_FRONTEND=noninteractive apt-get autoremove -y  && \
     DEBIAN_FRONTEND=noninteractive apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN wget http://download2.rstudio.org/rstudio-server-0.98.987-amd64.deb && dpkg -i rstudio-server-0.98.987-amd64.deb && rm /rstudio-server-0.98.987-amd64.deb
+# Install rstudio-server
+RUN wget http://download2.rstudio.org/rstudio-server-0.98.1081-amd64.deb && dpkg -i rstudio-server-0.98.1081-amd64.deb && rm /rstudio-server-0.98.1081-amd64.deb
 
 ADD rsession.conf /etc/rstudio/rsession.conf
 
