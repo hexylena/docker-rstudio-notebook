@@ -19,6 +19,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q
 
 RUN wget http://download2.rstudio.org/rstudio-server-0.98.987-amd64.deb && dpkg -i rstudio-server-0.98.987-amd64.deb && rm /rstudio-server-0.98.987-amd64.deb
 
+ADD rsession.conf /etc/rstudio/rsession.conf
+
 COPY ./GalaxyConnector.tar.gz /tmp/GalaxyConnector.tar.gz
 # Install packages
 COPY ./packages.R /tmp/packages.R
