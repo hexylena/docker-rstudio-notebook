@@ -13,7 +13,7 @@ RUN (echo "deb-src http://http.debian.net/debian squeeze main" >> /etc/apt/sourc
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q \
     r-base r-base-dev dpkg wget psmisc libssl0.9.8 cron sudo libcurl4-openssl-dev \
     curl libxml2-dev nginx python python-pip && \
-    pip install bioblend && \
+    pip install bioblend argparse && \
     DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q net-tools && DEBIAN_FRONTEND=noninteractive apt-get autoremove -y  && \
     DEBIAN_FRONTEND=noninteractive apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
