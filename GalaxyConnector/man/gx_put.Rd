@@ -6,6 +6,8 @@
 gx_put(filename, file_type = "auto")
 }
 \arguments{
+\item{file_type,}{auto-detect otherwise}
+
 \item{Path}{to file}
 }
 \description{

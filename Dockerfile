@@ -32,7 +32,7 @@ RUN wget http://download2.rstudio.org/rstudio-server-0.98.1081-amd64.deb && dpkg
 
 ADD rsession.conf /etc/rstudio/rsession.conf
 
-COPY ./GalaxyConnector.tar.gz /tmp/GalaxyConnector.tar.gz
+COPY ./GalaxyConnector_0.0.1.tar.gz /tmp/GalaxyConnector.tar.gz
 # Install packages
 COPY ./packages.R /tmp/packages.R
 RUN Rscript /tmp/packages.R &&  rm /tmp/packages.R
