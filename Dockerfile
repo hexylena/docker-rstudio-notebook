@@ -20,7 +20,7 @@ RUN (echo "deb-src http://http.debian.net/debian squeeze main" >> /etc/apt/sourc
 RUN apt-get -qq update && \
     apt-get install --no-install-recommends -y apt-transport-https \
     locales r-base r-base-dev dpkg wget psmisc libssl0.9.8 cron sudo \
-    libcurl4-openssl-dev curl libxml2-dev nginx python python-pip net-tools lsb-release tcpdump unixodbc unixodbc-dev && \
+    libcurl4-openssl-dev curl libxml2-dev nginx python python-pip net-tools lsb-release tcpdump unixodbc unixodbc-dev libmyodbc odbcinst odbc-postgresql && \
     pip install bioblend argparse && \
     apt-get autoremove -y  && \
     apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -29,7 +29,7 @@ RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
 RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 
 # Install rstudio-server
-RUN wget http://download2.rstudio.org/rstudio-server-0.98.1081-amd64.deb && dpkg -i rstudio-server-0.98.1081-amd64.deb && rm /rstudio-server-0.98.1081-amd64.deb
+RUN wget http://download2.rstudio.org/rstudio-server-0.98.1103-amd64.deb && dpkg -i rstudio-server-0.98.1103-amd64.deb && rm /rstudio-server-0.98.1103-amd64.deb
 
 ADD rsession.conf /etc/rstudio/rsession.conf
 
