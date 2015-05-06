@@ -28,8 +28,9 @@ RUN apt-get -qq update && \
 RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
 RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 
+ENV RSTUDIO_VERSION 1103
 # Install rstudio-server
-RUN wget http://download2.rstudio.org/rstudio-server-0.98.1081-amd64.deb && dpkg -i rstudio-server-0.98.1081-amd64.deb && rm /rstudio-server-0.98.1081-amd64.deb
+RUN wget http://download2.rstudio.org/rstudio-server-0.98.${RSTUDIO_VERSION}-amd64.deb && dpkg -i rstudio-server-0.98.${RSTUDIO_VERSION}-amd64.deb && rm /rstudio-server-0.98.${RSTUDIO_VERSION}-amd64.deb
 
 ADD rsession.conf /etc/rstudio/rsession.conf
 
