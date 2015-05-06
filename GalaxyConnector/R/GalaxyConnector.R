@@ -7,7 +7,7 @@
 #' @param file_type, auto-detect otherwise
 
 gx_put <- function(filename, file_type="auto"){
-    command <- paste("python", "/usr/local/bin/galaxy.py", "put", filename, file_type)
+    command <- paste("python", "/usr/local/bin/galaxy.py", "--action", "put", "--argument", filename, "--filetype", file_type)
     system(command)
 }
 
@@ -18,7 +18,7 @@ gx_put <- function(filename, file_type="auto"){
 #' @param ID number
 
 gx_get <- function(file_id){
-    command <- paste("python", "/usr/local/bin/galaxy.py", "get", file_id)
+    command <- paste("python", "/usr/local/bin/galaxy.py", "--action", "get", "--argument", file_id)
     system(command)
     return(paste("/import/", file_id, sep=""))
 }
