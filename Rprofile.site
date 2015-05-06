@@ -1,4 +1,3 @@
-library("yaml")
 library("GalaxyConnector")
 .First <- function() cat("\n   Welcome to the Galaxy R Interactive Environment!\n\nThe convenience functions gx_put() and gx_get() are available to you to interact with your current Galaxy history. You can save your workspace with gx_save()\n")
 options(encoding = "UTF-8")

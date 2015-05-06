@@ -6,5 +6,4 @@ update.packages(ask=FALSE, checkBuilt=TRUE)
 # Install some packages
 install.packages('RCurl')
 install.packages('XML')
-install.packages('yaml')
 install.packages('/tmp/GalaxyConnector.tar.gz', repos=NULL, type="source")
