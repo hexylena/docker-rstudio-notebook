@@ -7,3 +7,17 @@ update.packages(ask=FALSE, checkBuilt=TRUE)
 install.packages('RCurl')
 install.packages('XML')
 install.packages('/tmp/GalaxyConnector.tar.gz', repos=NULL, type="source")
+
+# addition from base image:
+
+# RODBC
+install.packages('RODBC')
+
+# bioconductor base
+source("http://bioconductor.org/biocLite.R")
+biocLite()
+
+# bioconductor packages
+biocLite("edgeR")
+biocLite("Rgraphviz")
+
