@@ -19,9 +19,16 @@ ENV_KEYS = ('DEBUG', 'GALAXY_WEB_PORT', 'NOTEBOOK_PASSWORD', 'CORS_ORIGIN',
 
 def _get_conf():
     conf = {}
-    for key in ENV_KEYS:
-        conf[key.lower()] = os.environ.get(key, None)
-    conf['galaxy_paster_port'] = conf['galaxy_web_port']
+    with open('/etc/profile.d/galaxy.sh', 'r') as handle:
+        for pair in handle:
+            values = pair.split('=')
+            key = values[0]
+            value = '='.join(values[1:])
+            if key in ENV_KEYS:
+                conf[key.lower()] = value.strip()
+
+    if 'galaxy_web_port' in conf:
+        conf['galaxy_paster_port'] = conf['galaxy_web_port']
     return conf
 
 
@@ -121,7 +128,6 @@ def put(filename, file_type='auto', history_id=None, use_objects=DEFAULT_USE_OBJ
         function will upload that file to galaxy using the current history.
         Does not return anything.
     """
-    conf = _get_conf()
     gi = get_galaxy_connection(use_objects)
     history_id = history_id or _get_history_id()
     if use_objects:
@@ -138,7 +144,6 @@ def get(dataset_id, history_id=None, use_objects=DEFAULT_USE_OBJECTS):
         download the file from the history and stores it under /import/
         Return value is the path to the dataset stored under /import/
     """
-    conf = _get_conf()
     gi = get_galaxy_connection(use_objects)
 
     file_path = '/import/%s' % dataset_id

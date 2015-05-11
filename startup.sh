@@ -9,11 +9,14 @@ sed -i "s/IE_PORT/${DOCKER_PORT}/" /proxy.conf;
 cp /proxy.conf /etc/nginx/sites-enabled/default
 # Create user
 useradd -p `openssl passwd -1 $NOTEBOOK_PASSWORD` galaxy -d /import/
-# Chown import as that user so they can write there
-chown galaxy:galaxy /import/ -R
 # Start the servers
 service rstudio-server start
 service nginx restart
 
+# Persist the environment elsewhere in the FS
+env > /etc/profile.d/galaxy.sh
+
+# Chown import as that user so they can write there
+chown galaxy:galaxy /import/ -R
 chmod 770 /import/ -R
 tail -f /var/log/nginx/*
