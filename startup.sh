@@ -1,9 +1,5 @@
 #!/bin/bash
 
-/etc/init.d/cron start
-# Make sure time for /import/ to be mounted
-sleep 3
-
 sed -i "s| '\*'; # IE_CORS_ORIGIN| '${CORS_ORIGIN}';|" /proxy.conf;
 sed -i "s/IE_PORT/${DOCKER_PORT}/" /proxy.conf;
 cp /proxy.conf /etc/nginx/sites-enabled/default
@@ -27,7 +23,6 @@ chown $uid:$gid /import -R
 
 # Start the servers
 service rstudio-server start
-service nginx restart
 
 # RStudio users don't get the system environment for some reason (I need to
 # figure out a better way to fix this...). Right now we persist the environment
@@ -35,5 +30,7 @@ service nginx restart
 # specific
 env > /etc/profile.d/galaxy.sh
 
-chmod 770 /import/ -R
-tail -f /var/log/nginx/*
+# Launch traffic monitor
+monitor_traffic.sh &
+# And nginx in foreground mode.
+nginx -g 'daemon off;'
