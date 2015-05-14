@@ -4,7 +4,7 @@
 
 FROM debian:squeeze
 
-MAINTAINER Eric Rasche <rasche.eric@yandex.ru>
+MAINTAINER Eric Rasche <esr@tamu.edu>
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG en_US.UTF-8
@@ -19,8 +19,9 @@ RUN (echo "deb-src http://http.debian.net/debian squeeze main" >> /etc/apt/sourc
 # Install all requirements and clean up afterwards
 RUN apt-get -qq update && \
     apt-get install --no-install-recommends -y apt-transport-https \
-    locales r-base r-base-dev dpkg wget psmisc libssl0.9.8 cron sudo \
-    libcurl4-openssl-dev curl libxml2-dev nginx python python-pip net-tools lsb-release tcpdump unixodbc unixodbc-dev libmyodbc odbcinst odbc-postgresql && \
+        locales r-base r-base-dev dpkg wget psmisc libssl0.9.8 procps sudo \
+        libcurl4-openssl-dev curl libxml2-dev nginx python python-pip net-tools \
+        lsb-release tcpdump unixodbc unixodbc-dev libmyodbc odbcinst odbc-postgresql && \
     pip install bioblend argparse && \
     apt-get autoremove -y  && \
     apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -50,7 +51,6 @@ RUN chmod +x /monitor_traffic.sh
 # The Galaxy instance can copy in data that needs to be present to the IPython webserver
 RUN mkdir /import
 
-COPY ./startup.sh /startup.sh
 COPY ./proxy.conf /proxy.conf
 COPY ./galaxy.py /usr/local/bin/galaxy.py
 COPY ./Rprofile.site /usr/lib/R/etc/Rprofile.site

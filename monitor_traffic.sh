@@ -5,20 +5,20 @@
 # Indicates that the server has received the first FIN signal from the client
 # and the connection is in the process of being closed. But that can never happen.
 # For some reason there are a few connections open that do not relate the
-# client that needs to be connected over the port :8787 If we do not have a
-# connection open from port 8787, kill the server and herewith the docker container.
+# client that needs to be connected over the port :80 If we do not have a
+# connection open from port 80, kill the server and herewith the docker container.
 
 while true; do
     sleep 60
 
-    if [ `netstat -t | grep -v CLOSE_WAIT | grep ':8787' | wc -l` -lt 3 ]
+    if [ `netstat -t | grep -v CLOSE_WAIT | grep ':80' | wc -l` -lt 3 ]
     then
-        pkill ipython
+        pkill nginx
         # We will create new history elements with all data that is relevant,
         # this means we can delete everything from /import/
         if [[ "$DEBUG" == "false" ]];
         then
-            rm /import/ -rf;
+            rm -rf /import/;
         fi
     fi
 
