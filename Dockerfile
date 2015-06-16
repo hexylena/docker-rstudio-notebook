@@ -29,9 +29,13 @@ RUN apt-get -qq update && \
 RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
 RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 
+# Build specific
 ENV RSTUDIO_VERSION 1103
+
 # Install rstudio-server
-RUN wget http://download2.rstudio.org/rstudio-server-0.98.${RSTUDIO_VERSION}-amd64.deb && dpkg -i rstudio-server-0.98.${RSTUDIO_VERSION}-amd64.deb && rm /rstudio-server-0.98.${RSTUDIO_VERSION}-amd64.deb
+RUN wget http://download2.rstudio.org/rstudio-server-0.98.${RSTUDIO_VERSION}-amd64.deb && \
+    dpkg -i rstudio-server-0.98.${RSTUDIO_VERSION}-amd64.deb && \
+    rm /rstudio-server-0.98.${RSTUDIO_VERSION}-amd64.deb
 
 ADD rsession.conf /etc/rstudio/rsession.conf
 
@@ -40,6 +44,16 @@ COPY ./GalaxyConnector_0.0.2.tar.gz /tmp/GalaxyConnector.tar.gz
 COPY ./packages.R /tmp/packages.R
 RUN Rscript /tmp/packages.R &&  rm /tmp/packages.R
 
+# ENV variables to replace conf file from Galaxy
+ENV DEBUG=false \
+    GALAXY_WEB_PORT=10000 \
+    NOTEBOOK_PASSWORD=none \
+    CORS_ORIGIN=none \
+    DOCKER_PORT=none \
+    API_KEY=none \
+    HISTORY_ID=none \
+    REMOTE_HOST=none \
+    GALAXY_URL=none
 
 ADD ./startup.sh /startup.sh
 RUN chmod +x /startup.sh
