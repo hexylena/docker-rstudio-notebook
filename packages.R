@@ -4,8 +4,8 @@ options(repos=structure(c(CRAN="http://cran.rstudio.com/")))
 # Update installed packages
 update.packages(ask=FALSE, checkBuilt=TRUE)
 # Install some packages
-install.packages('RCurl')
-install.packages('XML')
+install.packages(c('RCurl', 'XML', 'markdown', 'shiny', 'ggvis', 'dplyr',
+                   'ggplot2', 'plyr', 'reshape2', 'devtools', 'RODBC', 'maps', 'pheatmap' ))
 install.packages('/tmp/GalaxyConnector.tar.gz', repos=NULL, type="source")
 
 # addition from base image:
@@ -20,4 +20,12 @@ biocLite()
 # bioconductor packages
 biocLite("edgeR")
 biocLite("Rgraphviz")
-
+biocLite("biomaRt")
+biocLite("topGO")
+biocLite("limma")
+biocLite("DESeq2")
+biocLite("cummeRbund")
+biocLite("Biostrings")
+biocLite("GenomicRanges")
+biocLite("Rsamtools")
+biocLite("affy")
