@@ -8,15 +8,17 @@ import logging
 DEBUG = os.environ.get('DEBUG', "False").lower() == 'true'
 if DEBUG:
     logging.basicConfig(level=logging.DEBUG)
-logging.getLogger("bioblend").setLevel(logging.WARNING)
+logging.getLogger("bioblend").setLevel(logging.CRITICAL)
 log = logging.getLogger()
 
 with open('/etc/profile.d/galaxy.sh', 'r') as handle:
+    logging.debug('PATH %s', os.environ['PATH'])
     for pair in handle:
-        values = pair.split('=')
+        values = pair.strip().split('=')
         key = values[0]
         value = '='.join(values[1:])
         os.environ[key] = value
+    logging.debug('PATH after loading env file %s', os.environ['PATH'])
 
 
 def _get_ip():
@@ -28,7 +30,7 @@ def _get_ip():
     p2 = subprocess.Popen(cmd_grep, stdin=p1.stdout, stdout=subprocess.PIPE)
     cmd_awk = ['awk', '{ print $2 }']
     p3 = subprocess.Popen(cmd_awk, stdin=p2.stdout, stdout=subprocess.PIPE)
-    galaxy_ip = p3.stdout.read()
+    galaxy_ip = p3.stdout.read().strip()
     log.debug('Host IP determined to be %s', galaxy_ip)
     return galaxy_ip
 
