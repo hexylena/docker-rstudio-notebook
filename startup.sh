@@ -39,7 +39,9 @@ REMOTE_HOST=$REMOTE_HOST
 GALAXY_URL=$GALAXY_URL
 " > /etc/profile.d/galaxy.sh
 
+sudo -u galaxy galaxy-fuse.py $API_KEY -m /import/galaxy/ &
+
 # Launch traffic monitor
-monitor_traffic.sh &
+/monitor_traffic.sh &
 # And nginx in foreground mode.
 nginx -g 'daemon off;'

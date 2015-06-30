@@ -116,7 +116,6 @@ def put(filename, file_type='auto', history_id=None):
         Does not return anything.
     """
     history_id = history_id or os.environ['HISTORY_ID']
-
     gi = get_galaxy_connection(history_id=history_id)
     history = gi.histories.get( history_id )
     history.upload_dataset(filename, file_type=file_type)
@@ -129,9 +128,7 @@ def get(dataset_id, history_id=None):
         Return value is the path to the dataset stored under /import/
     """
     history_id = history_id or os.environ['HISTORY_ID']
-
     gi = get_galaxy_connection(history_id=history_id)
-
     file_path = '/import/%s' % dataset_id
 
     # Cache the file requests. E.g. in the example of someone doing something

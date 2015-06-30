@@ -19,9 +19,10 @@ RUN (echo "deb-src http://http.debian.net/debian squeeze main" >> /etc/apt/sourc
 # Install all requirements and clean up afterwards
 RUN apt-get -qq update && \
     apt-get install --no-install-recommends -y apt-transport-https \
-        locales r-base r-base-dev dpkg wget psmisc libssl0.9.8 procps sudo \
-        libcurl4-openssl-dev curl libxml2-dev nginx python python-pip net-tools \
-        lsb-release tcpdump unixodbc unixodbc-dev libmyodbc odbcinst odbc-postgresql && \
+        ca-certificates libfuse2 locales r-base r-base-dev dpkg wget psmisc \
+        libssl0.9.8 procps sudo libcurl4-openssl-dev curl libxml2-dev nginx \
+        python python-pip net-tools lsb-release tcpdump unixodbc \
+        unixodbc-dev libmyodbc odbcinst odbc-postgresql && \
     pip install bioblend argparse && \
     apt-get autoremove -y  && \
     apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -65,13 +66,30 @@ RUN chmod +x /monitor_traffic.sh
 # The Galaxy instance can copy in data that needs to be present to the IPython webserver
 RUN mkdir /import
 
+RUN wget --no-check-certificate https://pypi.python.org/packages/source/f/fusepy/fusepy-2.0.2.tar.gz#md5=8db99bcf4854411a9954da976d3bcc5a && \
+    echo '8db99bcf4854411a9954da976d3bcc5a  fusepy-2.0.2.tar.gz' > MD5SUMS && \
+    md5sum -c MD5SUMS && \
+    mkdir -p /build/fusepy && \
+    cd /build/fusepy && \
+    tar xvfz /fusepy-2.0.2.tar.gz && \
+    rm /fusepy-2.0.2.tar.gz && \
+    cd fusepy-2.0.2 && \
+    touch README && \
+    python setup.py install && \
+    rm /MD5SUMS && \
+    rm -rf /build/fusepy
+
 COPY ./proxy.conf /proxy.conf
-COPY ./galaxy.py /usr/local/bin/galaxy.py
+COPY ./galaxy.py /usr/bin/galaxy.py
 COPY ./Rprofile.site /usr/lib/R/etc/Rprofile.site
+COPY ./galaxy-fuse.py /usr/bin/galaxy-fuse.py
 
 RUN chmod +x /startup.sh
-RUN chmod +x /usr/local/bin/galaxy.py
+RUN chmod +x /usr/bin/galaxy.py /usr/bin/galaxy-fuse.py
 
+RUN apt-get update && apt-get install -y fuse-utils && usermod -a -G fuse galaxy
+
+EXPOSE 80
 VOLUME ["/import"]
 WORKDIR /import/
 # Start RStudio
