@@ -63,16 +63,18 @@ RUN mkdir /import
 
 COPY ./proxy.conf /proxy.conf
 COPY ./galaxy.py /usr/local/bin/galaxy.py
-COPY ./Rprofile.site /usr/lib/R/etc/Rprofile.site
 
 RUN chmod +x /startup.sh
 RUN chmod +x /usr/local/bin/galaxy.py
 
 # Copy in Galaxy Connector
-ADD ./GalaxyConnector_0.1.0.tar.gz /tmp/GalaxyConnector
+ADD ./GalaxyConnector /tmp/GalaxyConnector
 COPY ./packages-gx.R /tmp/packages-gx.R
 RUN Rscript /tmp/packages-gx.R
 
+# Must happen later, otherwise GalaxyConnector is loaded by default, and fails,
+# preventing ANY execution
+COPY ./Rprofile.site /usr/lib/R/etc/Rprofile.site
 
 VOLUME ["/import"]
 WORKDIR /import/
