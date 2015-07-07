@@ -62,10 +62,10 @@ ADD ./monitor_traffic.sh /monitor_traffic.sh
 RUN mkdir /import
 
 COPY ./proxy.conf /proxy.conf
-COPY ./galaxy.py /usr/local/bin/galaxy.py
+COPY ./galaxy.py /usr/bin/galaxy.py
 
 RUN chmod +x /startup.sh
-RUN chmod +x /usr/local/bin/galaxy.py
+RUN chmod +x /usr/bin/galaxy.py
 
 # Copy in Galaxy Connector
 ADD ./GalaxyConnector /tmp/GalaxyConnector
