@@ -3,11 +3,11 @@
 #'
 #' This function uploads a dataset to the current Galaxy history
 #'
-#' @param Path to file
-#' @param file_type, auto-detect otherwise
+#' @param filename, path to file
+#' @param file_type, auto-detect otherwise specify string filetype
 
 gx_put <- function(filename, file_type="auto"){
-    command <- paste("python", "/usr/local/bin/galaxy.py", "--action", "put", "--argument", filename, "--filetype", file_type)
+    command <- paste("python", "/usr/bin/galaxy.py", "--action", "put", "--argument", filename, "--filetype", file_type)
     system(command)
 }
 
@@ -15,10 +15,10 @@ gx_put <- function(filename, file_type="auto"){
 #'
 #' Download a dataset from the current Galaxy history by ID #
 #'
-#' @param ID number
+#' @param file_id, Dataset ID number for current history
 
 gx_get <- function(file_id){
-    command <- paste("python", "/usr/local/bin/galaxy.py", "--action", "get", "--argument", file_id)
+    command <- paste("python", "/usr/bin/galaxy.py", "--action", "get", "--argument", file_id)
     system(command)
     return(paste("/import/", file_id, sep=""))
 }
