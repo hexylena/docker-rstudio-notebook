@@ -41,7 +41,6 @@ ADD rsession.conf /etc/rstudio/rsession.conf
 
 # Install packages
 COPY ./packages.R /tmp/packages.R
-COPY ./packages-gx.R /tmp/packages-gx.R
 RUN Rscript /tmp/packages.R
 
 # ENV variables to replace conf file from Galaxy
@@ -70,7 +69,8 @@ RUN chmod +x /startup.sh
 RUN chmod +x /usr/local/bin/galaxy.py
 
 # Copy in Galaxy Connector
-COPY ./GalaxyConnector_0.1.0.tar.gz /tmp/GalaxyConnector.tar.gz
+ADD ./GalaxyConnector_0.1.0.tar.gz /tmp/GalaxyConnector
+COPY ./packages-gx.R /tmp/packages-gx.R
 RUN Rscript /tmp/packages-gx.R
 
 
