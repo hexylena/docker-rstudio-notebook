@@ -39,10 +39,10 @@ RUN wget http://download2.rstudio.org/rstudio-server-0.98.${RSTUDIO_VERSION}-amd
 
 ADD rsession.conf /etc/rstudio/rsession.conf
 
-COPY ./GalaxyConnector_0.0.2.tar.gz /tmp/GalaxyConnector.tar.gz
 # Install packages
 COPY ./packages.R /tmp/packages.R
-RUN Rscript /tmp/packages.R &&  rm /tmp/packages.R
+COPY ./packages-gx.R /tmp/packages-gx.R
+RUN Rscript /tmp/packages.R
 
 # ENV variables to replace conf file from Galaxy
 ENV DEBUG=false \
@@ -56,10 +56,7 @@ ENV DEBUG=false \
     GALAXY_URL=none
 
 ADD ./startup.sh /startup.sh
-RUN chmod +x /startup.sh
-
 ADD ./monitor_traffic.sh /monitor_traffic.sh
-RUN chmod +x /monitor_traffic.sh
 
 # /import will be the universal mount-point for IPython
 # The Galaxy instance can copy in data that needs to be present to the IPython webserver
@@ -71,6 +68,11 @@ COPY ./Rprofile.site /usr/lib/R/etc/Rprofile.site
 
 RUN chmod +x /startup.sh
 RUN chmod +x /usr/local/bin/galaxy.py
+
+# Copy in Galaxy Connector
+COPY ./GalaxyConnector_0.1.0.tar.gz /tmp/GalaxyConnector.tar.gz
+RUN Rscript /tmp/packages-gx.R
+
 
 VOLUME ["/import"]
 WORKDIR /import/

@@ -7,7 +7,6 @@ update.packages(ask=FALSE, checkBuilt=TRUE)
 install.packages(c('RCurl', 'XML', 'markdown', 'shiny', 'ggvis', 'dplyr',
                    'ggplot2', 'plyr', 'reshape2', 'devtools', 'RODBC', 'maps',
                    'pheatmap', 'readr', 'tidyr', 'dplyr', 'RJSONIO', 'shinyapps'))
-install.packages('/tmp/GalaxyConnector.tar.gz', repos=NULL, type="source")
 
 # bioconductor base
 source("http://bioconductor.org/biocLite.R")
