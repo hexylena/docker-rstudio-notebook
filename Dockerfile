@@ -12,12 +12,11 @@ ENV LANGUAGE en_US.UTF-8
 
 
 # Ensure cran is available
-RUN (echo "deb http://cran.mtu.edu/bin/linux/debian squeeze-cran3/" >> /etc/apt/sources.list && apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480)
-RUN (echo "deb-src http://http.debian.net/debian squeeze main" >> /etc/apt/sources.list && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9)
-
-
-# Install all requirements and clean up afterwards
-RUN apt-get -qq update && \
+RUN (echo "deb http://cran.mtu.edu/bin/linux/debian squeeze-cran3/" >> /etc/apt/sources.list && \
+    apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480) && \
+    (echo "deb-src http://http.debian.net/debian squeeze main" >> /etc/apt/sources.list && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9) && \
+    apt-get -qq update && \
     apt-get install --no-install-recommends -y apt-transport-https \
         locales r-base r-base-dev dpkg wget psmisc libssl0.9.8 procps sudo \
         libcurl4-openssl-dev curl libxml2-dev nginx python python-pip net-tools \
