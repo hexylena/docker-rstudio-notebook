@@ -21,7 +21,8 @@ RUN apt-get -qq update && \
     apt-get install --no-install-recommends -y apt-transport-https \
         locales r-base r-base-dev dpkg wget psmisc libssl0.9.8 procps sudo \
         libcurl4-openssl-dev curl libxml2-dev nginx python python-pip net-tools \
-        lsb-release tcpdump unixodbc unixodbc-dev libmyodbc odbcinst odbc-postgresql && \
+        lsb-release tcpdump unixodbc unixodbc-dev libmyodbc odbcinst odbc-postgresql \
+        texlive-latex-base texlive-extra-utils texlive-fonts-recommended texlive-latex-recommended && \
     pip install bioblend argparse && \
     apt-get autoremove -y  && \
     apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
