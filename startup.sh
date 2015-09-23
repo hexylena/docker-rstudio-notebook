@@ -1,7 +1,8 @@
 #!/bin/bash
 
 sed -i "s| '\*'; # IE_CORS_ORIGIN| '${CORS_ORIGIN}';|" /proxy.conf;
-sed -i "s/IE_PORT/${DOCKER_PORT}/" /proxy.conf;
+:${PROXY_PREFIX:=}
+sed -i "s/PROXY_PREFIX/${PROXY_PREFIX}/" /proxy.conf;
 cp /proxy.conf /etc/nginx/sites-enabled/default
 
 # The RStudio image starts as privileged user. The parent Galaxy server is
