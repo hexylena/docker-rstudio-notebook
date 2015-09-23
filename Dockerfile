@@ -80,3 +80,4 @@ VOLUME ["/import"]
 WORKDIR /import/
 # Start RStudio
 CMD /startup.sh
+EXPOSE 80
