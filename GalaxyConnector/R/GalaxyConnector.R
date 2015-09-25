@@ -43,7 +43,6 @@ gx_save <- function(session_name="workspace"){
 #' gx_restore
 #'
 #' Restore the notebook from a .RData and .RHistory object from the current Galaxy history.
-#' Convenience function which wraps save.image and gx_put
 #' @param .RData ID number
 #' @param .RHistory ID number
 
