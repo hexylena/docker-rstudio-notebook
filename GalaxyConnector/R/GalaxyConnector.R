@@ -28,11 +28,11 @@ gx_get <- function(file_id){
 #'
 #' Save the notebook .RData and .RHistory to Galaxy. Convenience function which wraps save.image and gx_put
 #'
-#' @param Session name, default "workspace"
+#' @param session_name, default "workspace"
 
 gx_save <- function(session_name="workspace"){
-	workspace <- paste("/tmp/",session_name,".RData",sep="")
-	hist <- paste("/tmp/",session_name,".RHistory",sep="")
+    workspace <- paste("/tmp/",session_name,".RData",sep="")
+    hist <- paste("/tmp/",session_name,".RHistory",sep="")
     save.image(workspace)
     savehistory(hist)
     gx_put(workspace)
@@ -48,8 +48,8 @@ gx_save <- function(session_name="workspace"){
 #' @param .RHistory ID number
 
 gx_restore <- function(rdata_id,rhistory_id){
-	rdata <- gx_get(rdata_id)
-	rhistory <- gx_get(rhistory_id)
-	load(rdata,envir=.GlobalEnv)
-	loadhistory(rhistory)
+    rdata <- gx_get(rdata_id)
+    rhistory <- gx_get(rhistory_id)
+    load(rdata,envir=.GlobalEnv)
+    loadhistory(rhistory)
 }
