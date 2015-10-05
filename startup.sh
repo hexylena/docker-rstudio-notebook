@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sed -i "s| '\*'; # IE_CORS_ORIGIN| '${CORS_ORIGIN}';|" /proxy.conf;
-sed -i "s/IE_PORT/${DOCKER_PORT}/" /proxy.conf;
+sed -i "s|PROXY_PREFIX|${PROXY_PREFIX}|" /proxy.conf;
 cp /proxy.conf /etc/nginx/sites-enabled/default
 
 # The RStudio image starts as privileged user. The parent Galaxy server is
@@ -28,9 +28,18 @@ service rstudio-server start
 # figure out a better way to fix this...). Right now we persist the environment
 # in a file which galaxy.py reads which is a little bit clunky and RStudio
 # specific
-env > /etc/profile.d/galaxy.sh
+echo "DEBUG=$DEBUG
+GALAXY_WEB_PORT=$GALAXY_WEB_PORT
+NOTEBOOK_PASSWORD=$NOTEBOOK_PASSWORD
+CORS_ORIGIN=$CORS_ORIGIN
+DOCKER_PORT=$DOCKER_PORT
+API_KEY=$API_KEY
+HISTORY_ID=$HISTORY_ID
+REMOTE_HOST=$REMOTE_HOST
+GALAXY_URL=$GALAXY_URL
+" > /etc/profile.d/galaxy.sh
 
 # Launch traffic monitor
-monitor_traffic.sh &
+/monitor_traffic.sh &
 # And nginx in foreground mode.
 nginx -g 'daemon off;'
