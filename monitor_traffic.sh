@@ -11,13 +11,16 @@
 while true; do
     sleep 60
 
+    if [[ "$DEBUG" == "true" ]]; then
+        echo "Netstat found these connections: "
+        echo $(netstat -t | grep -v CLOSE_WAIT)
+        echo
+    fi
+
     if [ `netstat -t | grep -v CLOSE_WAIT | grep ':80' | wc -l` -lt 3 ]
     then
-        pkill nginx
-        # We will create new history elements with all data that is relevant,
-        # this means we can delete everything from /import/
-        if [[ "$DEBUG" == "false" ]];
-        then
+        if [[ "$DEBUG" == "false" ]]; then
+            pkill nginx
             rm -rf /import/;
         fi
     fi
