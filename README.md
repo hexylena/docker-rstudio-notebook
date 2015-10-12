@@ -44,7 +44,7 @@ Variable            | Use
 `HISTORY_ID`        | ID of current Galaxy History, used in easing the dataset upload/download process
 `REMOTE_HOST`       | Unused
 `GALAXY_URL`        | URL at which Galaxy is accessible
-`DEBUG`             | Enable debugging mode, mostly for developers. Set to `true` or `false` (note case).
+`DEBUG`             | Enable debugging mode, mostly for developers. Set to `true` or `false` (note lower case).
 
 
 Authors
