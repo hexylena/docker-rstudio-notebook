@@ -6,10 +6,10 @@ FROM debian:squeeze
 
 MAINTAINER Eric Rasche <esr@tamu.edu>
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US.UTF-8
-
+ENV DEBIAN_FRONTEND=noninteractive \
+    LANG=en_US.UTF-8 \
+    LANGUAGE=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8
 
 # Ensure cran is available
 RUN (echo "deb http://cran.mtu.edu/bin/linux/debian squeeze-cran3/" >> /etc/apt/sources.list && \
@@ -21,21 +21,21 @@ RUN (echo "deb http://cran.mtu.edu/bin/linux/debian squeeze-cran3/" >> /etc/apt/
         locales r-base r-base-dev dpkg wget psmisc libssl0.9.8 procps sudo \
         libcurl4-openssl-dev curl libxml2-dev nginx python python-pip net-tools \
         lsb-release tcpdump unixodbc unixodbc-dev libmyodbc odbcinst odbc-postgresql \
-        texlive-latex-base texlive-extra-utils texlive-fonts-recommended texlive-latex-recommended && \
+        texlive-latex-base texlive-extra-utils texlive-fonts-recommended \
+        texlive-latex-recommended libapparmor1 libedit2 && \
     pip install bioblend argparse && \
     apt-get autoremove -y  && \
     apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
-RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
+RUN locale-gen en_US.UTF-8 && dpkg-reconfigure locales
 
 # Build specific
 ENV RSTUDIO_VERSION 0.99.891
 
 # Install rstudio-server
 RUN wget http://download2.rstudio.org/rstudio-server-${RSTUDIO_VERSION}-amd64.deb && \
-    dpkg -i rstudio-server-0.98.${RSTUDIO_VERSION}-amd64.deb && \
-    rm /rstudio-server-0.98.${RSTUDIO_VERSION}-amd64.deb
+    dpkg -i rstudio-server-${RSTUDIO_VERSION}-amd64.deb && \
+    rm /rstudio-server-${RSTUDIO_VERSION}-amd64.deb
 
 ADD rsession.conf /etc/rstudio/rsession.conf
 
