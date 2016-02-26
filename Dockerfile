@@ -2,7 +2,7 @@
 #
 # VERSION       0.1.0
 
-FROM debian:squeeze
+FROM ubuntu:14.04
 
 MAINTAINER Eric Rasche <esr@tamu.edu>
 
@@ -12,13 +12,16 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LC_ALL=en_US.UTF-8
 
 # Ensure cran is available
-RUN (echo "deb http://cran.mtu.edu/bin/linux/debian squeeze-cran3/" >> /etc/apt/sources.list && \
-    apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480) && \
-    (echo "deb-src http://http.debian.net/debian squeeze main" >> /etc/apt/sources.list && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9) && \
+RUN echo "deb http://cran.mtu.edu/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list && \
+    apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480 && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9 && \
     apt-get -qq update && \
+    apt-get install locales && \
+    echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && \
+    locale-gen en_US.UTF-8 && \
+    dpkg-reconfigure locales && \
     apt-get install --no-install-recommends -y apt-transport-https \
-        locales r-base r-base-dev dpkg wget psmisc libssl0.9.8 procps sudo \
+        r-base r-base-dev dpkg wget psmisc libssl1.0.0 procps sudo \
         libcurl4-openssl-dev curl libxml2-dev nginx python python-pip net-tools \
         lsb-release tcpdump unixodbc unixodbc-dev libmyodbc odbcinst odbc-postgresql \
         texlive-latex-base texlive-extra-utils texlive-fonts-recommended \
@@ -27,7 +30,6 @@ RUN (echo "deb http://cran.mtu.edu/bin/linux/debian squeeze-cran3/" >> /etc/apt/
     apt-get autoremove -y  && \
     apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN locale-gen en_US.UTF-8 && dpkg-reconfigure locales
 
 # Build specific
 ENV RSTUDIO_VERSION 0.99.891
