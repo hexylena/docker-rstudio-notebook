@@ -47,18 +47,6 @@ Variable            | Use
 `DEBUG`             | Enable debugging mode, mostly for developers
 
 
-Authors
-=======
-
- * Bjoern Gruening
- * Eric Rasche
-
-History
-=======
-
-- v0.1: Initial public release
-
-
 Licence (MIT)
 =============
 
