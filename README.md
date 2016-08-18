@@ -1,5 +1,4 @@
-Docker RStudio Container
-========================
+# Docker RStudio Container
 
 [![Docker RStudio Notebook](http://dockeri.co/image/erasche/docker-rstudio-notebook)](https://registry.hub.docker.com/u/erasche/docker-rstudio-notebook/)
 
@@ -8,8 +7,7 @@ A variety of different packages are pre-installed and can be used right away.
 
 This docker container is used by the [Galaxy-RStudio project](https://github.com/erasche/docker-rstudio-notebook)
 
-Usage
-=====
+## Usage
 
 * Build your own image and run it
 
@@ -29,10 +27,17 @@ Usage
  $ docker run -p 7777:8787 -v `pwd`/foo:/import erasche/docker-rstudio-notebook
  ```
 
-Environment Variables
-=====================
+### Environment Variables
 
 Several environment variables are available by default, per IE rough standards
+
+#### Build-Time Variables
+
+Variable       | Use
+-------------- | ----
+`RSTUDIO_FULL` | Build RStudio with the full complement of Bio packages (warning, slow)
+
+#### Run-Time Variables
 
 Variable            | Use
 ------------------- | ---
@@ -46,8 +51,7 @@ Variable            | Use
 `DEBUG`             | Enable debugging mode, mostly for developers
 
 
-Licence (MIT)
-=============
+## Licence (MIT)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
