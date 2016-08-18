@@ -13,8 +13,8 @@ uid=$(stat --printf %u /import)
 gid=$(stat --printf %g /import)
 
 # Fix the user + group ID, hopefully no clashes.
-sed -i "s|:1450:|:$gid:" /etc/group
-sed -i "s|:1450:|:$uid:" /etc/passwd /etc/passwd-
+sed -i "s|:1450:|:$gid:|" /etc/group
+sed -i "s|:1450:1450:|:$uid:$gid:|" /etc/passwd /etc/passwd-
 
 # Correct permissions on the folder
 chown $uid:$gid /import -R
