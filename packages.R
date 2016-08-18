@@ -6,27 +6,26 @@ update.packages(ask=FALSE, checkBuilt=TRUE)
 # Install some packages
 install.packages(c('devtools'))
 
-##########
-# 1. Lite verion of rstudio docker
-##########
-#install.packages(c('RCurl', 'XML', 'markdown', 'shiny', 'ggvis', 'dplyr',
-                   #'ggplot2', 'plyr', 'reshape2', 'devtools', 'RODBC', 'maps',
-                   #'pheatmap', 'readr', 'tidyr', 'dplyr', 'RJSONIO',
-                   #'shinyapps', 'knitr'))
+if(Sys.getenv(x = "RSTUDIO_FULL", unset="0") == "0") {
+    install.packages(c('RCurl', 'XML', 'markdown', 'shiny', 'ggvis', 'dplyr',
+                       'ggplot2', 'plyr', 'reshape2', 'devtools', 'RODBC',
+                       'maps', 'pheatmap', 'readr', 'tidyr', 'dplyr',
+                       'RJSONIO', 'shinyapps', 'knitr'))
 
-# bioconductor base
-#source("http://bioconductor.org/biocLite.R")
-#biocLite()
+    # bioconductor base
+    source("http://bioconductor.org/biocLite.R")
+    biocLite()
 
-# bioconductor packages
-#biocLite("edgeR")
-#biocLite("Rgraphviz")
-#biocLite("biomaRt")
-#biocLite("topGO")
-#biocLite("limma")
-#biocLite("DESeq2")
-#biocLite("cummeRbund")
-#biocLite("Biostrings")
-#biocLite("GenomicRanges")
-#biocLite("Rsamtools")
-#biocLite("affy")
+    # bioconductor packages
+    biocLite("edgeR")
+    biocLite("Rgraphviz")
+    biocLite("biomaRt")
+    biocLite("topGO")
+    biocLite("limma")
+    biocLite("DESeq2")
+    biocLite("cummeRbund")
+    biocLite("Biostrings")
+    biocLite("GenomicRanges")
+    biocLite("Rsamtools")
+    biocLite("affy")
+}
