@@ -1,4 +1,3 @@
-
 #' gx_put
 #'
 #' This function uploads a dataset to the current Galaxy history
