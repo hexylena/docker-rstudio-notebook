@@ -9,20 +9,20 @@ cp /proxy.conf /etc/nginx/sites-enabled/default
 # running on. If /import is not owned by 1450 we need to create a new user with
 # the same UID/GID as /import and make everything accessible to this new user.
 
-uid=`stat --printf %u /import`
-gid=`stat --printf %g /import`
+uid=$(stat --printf %u /import)
+gid=$(stat --printf %g /import)
 
 # If the group doesn't exist, add it
 [ $(getent group $gid) ] || groupadd -r galaxy -g $gid
 # Add the user (maybe not fault tolerant for existing UIDs)
-useradd -u $uid -r -g $gid -d /import \
-    -c "RStudio Galaxy user" \
-    -p `openssl passwd -1 $NOTEBOOK_PASSWORD` galaxy
+useradd -u "$uid" -r -g "$gid" -d /import \
+    -c "RStudio User" \
+    -p $(openssl passwd -1 rstudio) rstudio
 # Correct permissions on the folder
 chown $uid:$gid /import -R
 
-# Start the servers
-service rstudio-server start
+# Start the server. I dont' trust their daemonization
+/usr/lib/rstudio-server/bin/rserver --server-daemonize=0 &
 
 # RStudio users don't get the system environment for some reason (I need to
 # figure out a better way to fix this...). Right now we persist the environment
