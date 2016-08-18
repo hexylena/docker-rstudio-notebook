@@ -12,12 +12,10 @@ cp /proxy.conf /etc/nginx/sites-enabled/default
 uid=$(stat --printf %u /import)
 gid=$(stat --printf %g /import)
 
-# If the group doesn't exist, add it
-[ $(getent group $gid) ] || groupadd -r galaxy -g $gid
-# Add the user (maybe not fault tolerant for existing UIDs)
-useradd -u "$uid" -r -g "$gid" -d /import \
-    -c "RStudio User" \
-    -p $(openssl passwd -1 rstudio) rstudio
+# Fix the user + group ID, hopefully no clashes.
+sed -i "s|:1450:|:$gid:" /etc/group
+sed -i "s|:1450:|:$uid:" /etc/passwd /etc/passwd-
+
 # Correct permissions on the folder
 chown $uid:$gid /import -R
 

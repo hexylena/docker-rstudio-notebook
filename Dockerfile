@@ -53,25 +53,25 @@ ENV DEBUG=false \
     API_KEY=none \
     HISTORY_ID=none \
     REMOTE_HOST=none \
-    GALAXY_URL=none
+    GALAXY_URL=none \
+    RSTUDIO_FULL=0
+    #RSTUDIO_FULL=1
 
 ADD ./startup.sh /startup.sh
 ADD ./monitor_traffic.sh /monitor_traffic.sh
+ADD ./proxy.conf /proxy.conf
+ADD ./GalaxyConnector /tmp/GalaxyConnector
+add ./packages-gx.R /tmp/packages-gx.R
 
 # /import will be the universal mount-point for IPython
 # The Galaxy instance can copy in data that needs to be present to the IPython webserver
-RUN mkdir /import
+RUN chmod +x /startup.sh && \
+    chmod +x /usr/bin/galaxy.py && \
+    Rscript /tmp/packages-gx.R
 
-COPY ./proxy.conf /proxy.conf
-COPY ./galaxy.py /usr/bin/galaxy.py
-
-RUN chmod +x /startup.sh
-RUN chmod +x /usr/bin/galaxy.py
-
-# Copy in Galaxy Connector
-ADD ./GalaxyConnector /tmp/GalaxyConnector
-COPY ./packages-gx.R /tmp/packages-gx.R
-RUN Rscript /tmp/packages-gx.R
+RUN groupadd -r rstudio -g 1450 && \
+    useradd -u 1450 -r -g rstudio -d /import -c "RStudio User" \
+        -p $(openssl passwd -1 rstudio) rstudio
 
 # Must happen later, otherwise GalaxyConnector is loaded by default, and fails,
 # preventing ANY execution
