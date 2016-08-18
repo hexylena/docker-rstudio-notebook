@@ -21,8 +21,8 @@ useradd -u $uid -r -g $gid -d /import \
 # Correct permissions on the folder
 chown $uid:$gid /import -R
 
-# Start the servers
-service rstudio-server start
+# Start the server. I dont' trust their daemonization
+/usr/lib/rstudio-server/bin/rserver --server-daemonize=0 &
 
 # RStudio users don't get the system environment for some reason (I need to
 # figure out a better way to fix this...). Right now we persist the environment
