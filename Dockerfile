@@ -70,7 +70,8 @@ add ./packages-gx.R /tmp/packages-gx.R
 # The Galaxy instance can copy in data that needs to be present to the IPython webserver
 RUN chmod +x /startup.sh && \
     chmod +x /usr/bin/galaxy.py && \
-    Rscript /tmp/packages-gx.R
+    Rscript /tmp/packages-gx.R && \
+    pip install galaxy-ie-helpers
 
 RUN groupadd -r rstudio -g 1450 && \
     useradd -u 1450 -r -g rstudio -d /import -c "RStudio User" \
