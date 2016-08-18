@@ -69,7 +69,6 @@ add ./packages-gx.R /tmp/packages-gx.R
 # /import will be the universal mount-point for IPython
 # The Galaxy instance can copy in data that needs to be present to the IPython webserver
 RUN chmod +x /startup.sh && \
-    chmod +x /usr/bin/galaxy.py && \
     Rscript /tmp/packages-gx.R && \
     pip install galaxy-ie-helpers
 
