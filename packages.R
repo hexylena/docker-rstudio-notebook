@@ -8,7 +8,7 @@ install.packages(c('devtools'))
 
 if(Sys.getenv(x = "RSTUDIO_FULL", unset="0") == "0") {
     install.packages(c('RCurl', 'XML', 'markdown', 'shiny', 'ggvis', 'dplyr',
-                       'ggplot2', 'plyr', 'reshape2', 'devtools', 'RODBC',
+                       'ggplot2', 'plyr', 'reshape2', 'RODBC',
                        'maps', 'pheatmap', 'readr', 'tidyr', 'dplyr',
                        'RJSONIO', 'shinyapps', 'knitr'))
 
