@@ -57,6 +57,9 @@ ENV DEBUG=false \
     RSTUDIO_FULL=0
     #RSTUDIO_FULL=1
 
+VOLUME ["/import"]
+WORKDIR /import/
+
 ADD ./startup.sh /startup.sh
 ADD ./monitor_traffic.sh /monitor_traffic.sh
 ADD ./proxy.conf /proxy.conf
@@ -77,8 +80,6 @@ RUN groupadd -r rstudio -g 1450 && \
 # preventing ANY execution
 COPY ./Rprofile.site /usr/lib/R/etc/Rprofile.site
 
-VOLUME ["/import"]
-WORKDIR /import/
 # Start RStudio
 CMD /startup.sh
 EXPOSE 80
