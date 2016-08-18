@@ -32,7 +32,7 @@ RUN echo "deb http://cran.mtu.edu/bin/linux/ubuntu trusty/" >> /etc/apt/sources.
 
 
 # Build specific
-ENV RSTUDIO_VERSION 0.99.891
+ENV RSTUDIO_VERSION 0.99.903
 
 # Install rstudio-server
 RUN wget http://download2.rstudio.org/rstudio-server-${RSTUDIO_VERSION}-amd64.deb && \
