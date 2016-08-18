@@ -48,7 +48,6 @@ RUN Rscript /tmp/packages.R
 # ENV variables to replace conf file from Galaxy
 ENV DEBUG=false \
     GALAXY_WEB_PORT=10000 \
-    NOTEBOOK_PASSWORD=none \
     CORS_ORIGIN=none \
     DOCKER_PORT=none \
     API_KEY=none \

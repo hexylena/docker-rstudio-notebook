@@ -37,7 +37,6 @@ Several environment variables are available by default, per IE rough standards
 Variable            | Use
 ------------------- | ---
 `GALAXY_WEB_PORT`   | Port on which Galaxy is running, if applicable
-`NOTEBOOK_PASSWORD` | Password with which to secure the RStudio login. The default username is `galaxy`
 `CORS_ORIGIN`       | If the notebook is proxied, this is the URL the end-user will see when trying to access a notebook
 `DOCKER_PORT`       | Used in Galaxy Interactive Environments to ensure that proxy routes are unique and accessible
 `API_KEY`           | Galaxy API Key with which to interface with Galaxy
