@@ -41,10 +41,6 @@ RUN wget http://download2.rstudio.org/rstudio-server-${RSTUDIO_VERSION}-amd64.de
 
 ADD rsession.conf /etc/rstudio/rsession.conf
 
-# Install packages
-COPY ./packages.R /tmp/packages.R
-RUN Rscript /tmp/packages.R
-
 # ENV variables to replace conf file from Galaxy
 ENV DEBUG=false \
     GALAXY_WEB_PORT=10000 \
@@ -54,7 +50,11 @@ ENV DEBUG=false \
     HISTORY_ID=none \
     REMOTE_HOST=none \
     GALAXY_URL=none \
-    RSTUDIO_FULL=1
+    RSTUDIO_FULL=0
+
+# Install packages
+ADD ./packages.R /tmp/packages.R
+RUN Rscript /tmp/packages.R
 
 VOLUME ["/import"]
 WORKDIR /import/
