@@ -11,9 +11,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LANGUAGE=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8
 
-RUN apt-get -qq update && \
-    apt-get install apt-transport-https && \
-    echo "deb https://cran.mtu.edu/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list && \
+# Ensure cran is available
+RUN echo "deb http://cran.mtu.edu/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list && \
     apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480 && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9 && \
     apt-get -qq update && \
