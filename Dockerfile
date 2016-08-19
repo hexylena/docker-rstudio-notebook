@@ -12,7 +12,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LC_ALL=en_US.UTF-8
 
 # Ensure cran is available
-RUN echo "deb http://cran.mtu.edu/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list && \
+RUN echo "deb https://cran.mtu.edu/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list && \
     apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480 && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9 && \
     apt-get -qq update && \
@@ -64,7 +64,8 @@ ADD ./startup.sh /startup.sh
 ADD ./monitor_traffic.sh /monitor_traffic.sh
 ADD ./proxy.conf /proxy.conf
 ADD ./GalaxyConnector /tmp/GalaxyConnector
-add ./packages-gx.R /tmp/packages-gx.R
+ADD ./packages-gx.R /tmp/packages-gx.R
+ADD ./rserver.conf /etc/rstudio/rserver.conf
 
 # /import will be the universal mount-point for IPython
 # The Galaxy instance can copy in data that needs to be present to the IPython webserver
