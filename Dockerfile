@@ -64,7 +64,6 @@ ADD ./monitor_traffic.sh /monitor_traffic.sh
 ADD ./proxy.conf /proxy.conf
 ADD ./GalaxyConnector /tmp/GalaxyConnector
 ADD ./packages-gx.R /tmp/packages-gx.R
-ADD ./rserver.conf /etc/rstudio/rserver.conf
 
 # /import will be the universal mount-point for IPython
 # The Galaxy instance can copy in data that needs to be present to the IPython webserver
