@@ -1,8 +1,8 @@
 Package: GalaxyConnector
 Type: Package
 Title: provides Galaxy upload/download
-Version: 0.1.0
-Date: 2015-07-07
+Version: 0.2.0
+Date: 2016-08-18
 Author: Eric Rasche
 Maintainer: Eric Rasche <esr@tamu.edu>
 Description: Provides put and get funtions for talking to Galaxy

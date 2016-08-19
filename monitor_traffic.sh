@@ -9,7 +9,7 @@
 # connection open from port 80, kill the server and herewith the docker container.
 
 while true; do
-    sleep 60
+    sleep 240
 
     if [ `netstat -t | grep -v CLOSE_WAIT | grep ':80' | wc -l` -lt 3 ]
     then
