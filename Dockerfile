@@ -55,7 +55,7 @@ ENV DEBUG=false \
     HISTORY_ID=none \
     REMOTE_HOST=none \
     GALAXY_URL=none \
-    RSTUDIO_FULL=1
+    RSTUDIO_FULL=0
 
 VOLUME ["/import"]
 WORKDIR /import/
@@ -67,8 +67,11 @@ ADD ./GalaxyConnector /tmp/GalaxyConnector
 ADD ./packages-gx.R /tmp/packages-gx.R
 ADD ./rserver.conf /etc/rstudio/rserver.conf
 
+COPY ./userconf.sh /etc/cont-init.d/conf
+
+
 # /import will be the universal mount-point for IPython
-# The Galaxy instance can copy in data that needs to be present to the IPython webserver
+# The Galaxy instance can copy in data that needs to be present to the Rstudio webserver
 RUN chmod +x /startup.sh && \
     Rscript /tmp/packages-gx.R && \
     pip install galaxy-ie-helpers
