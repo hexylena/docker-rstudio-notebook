@@ -67,6 +67,9 @@ ADD ./GalaxyConnector /tmp/GalaxyConnector
 ADD ./packages-gx.R /tmp/packages-gx.R
 ADD ./rserver.conf /etc/rstudio/rserver.conf
 
+# In a hope that this might help the login problem
+RUN echo "auth-minimum-user-id=100" > /etc/rstudio/rserver.conf
+
 COPY ./userconf.sh /etc/cont-init.d/conf
 
 
