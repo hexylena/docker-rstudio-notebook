@@ -11,8 +11,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LANGUAGE=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8
 
-RUN echo "deb http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe" >> /etc/apt/sources.list && \
-    apt-get -qq update && \
+RUN apt-get -qq update && \
     apt-get install --no-install-recommends -y apt-transport-https && \
     echo "deb https://cran.mtu.edu/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list && \
     apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480 && \
