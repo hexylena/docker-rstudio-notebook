@@ -67,10 +67,6 @@ ADD ./GalaxyConnector /tmp/GalaxyConnector
 ADD ./packages-gx.R /tmp/packages-gx.R
 ADD ./rserver.conf /etc/rstudio/rserver.conf
 
-# In a hope that this might help the login problem
-COPY ./userconf.sh /etc/cont-init.d/conf
-
-
 # /import will be the universal mount-point for IPython
 # The Galaxy instance can copy in data that needs to be present to the Rstudio webserver
 RUN chmod +x /startup.sh && \
