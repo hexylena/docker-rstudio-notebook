@@ -12,8 +12,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LC_ALL=en_US.UTF-8
 
 RUN apt-get -qq update && \
-    apt-get install --no-install-recommends -y apt-transport-https && \
-    echo "deb http://cran.rstudio.com/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list && \
+    apt-get install --no-install-recommends -y apt-transport-https ca-certificates && \
+    echo "deb https://cran.rstudio.com/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list && \
     apt-key adv --keyserver keys.gnupg.net --recv-key 06F90DE5381BA480 && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 51716619E084DAB9 && \
     apt-get -qq update && \
