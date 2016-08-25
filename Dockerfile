@@ -13,9 +13,10 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 RUN apt-get -qq update && \
     apt-get install --no-install-recommends -y apt-transport-https && \
-    echo "deb https://cran.mtu.edu/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list && \
+    echo "deb https://cran.rstudio.com/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list && \
     apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480 && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9 && \
+    apt-get -qq update && \
     apt-get install --no-install-recommends -y locales && \
     echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && \
     locale-gen en_US.UTF-8 && \
@@ -67,8 +68,6 @@ ADD ./packages-gx.R /tmp/packages-gx.R
 ADD ./rserver.conf /etc/rstudio/rserver.conf
 
 # In a hope that this might help the login problem
-RUN echo "auth-minimum-user-id=100" > /etc/rstudio/rserver.conf
-
 COPY ./userconf.sh /etc/cont-init.d/conf
 
 

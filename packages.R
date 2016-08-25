@@ -6,7 +6,7 @@ update.packages(ask=FALSE, checkBuilt=TRUE)
 # Install some packages
 install.packages(c('devtools'))
 
-if(Sys.getenv(x = "RSTUDIO_FULL", unset="0") == "0") {
+if(Sys.getenv(x = "RSTUDIO_FULL", unset="0") == "1") {
     install.packages(c('RCurl', 'XML', 'markdown', 'shiny', 'ggvis', 'dplyr',
                        'ggplot2', 'plyr', 'reshape2', 'RODBC',
                        'maps', 'pheatmap', 'readr', 'tidyr', 'dplyr',
