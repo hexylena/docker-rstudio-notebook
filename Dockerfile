@@ -79,7 +79,8 @@ RUN chmod +x /startup.sh && \
 
 RUN groupadd -r rstudio -g 1450 && \
     useradd -u 1450 -r -g rstudio -d /import -c "RStudio User" \
-        -p $(openssl passwd -1 rstudio) rstudio
+        -p $(openssl passwd -1 rstudio) rstudio && \
+    chown -R rstudio:rstudio /import
 
 # Must happen later, otherwise GalaxyConnector is loaded by default, and fails,
 # preventing ANY execution

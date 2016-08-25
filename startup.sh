@@ -12,9 +12,11 @@ cp /proxy.conf /etc/nginx/sites-enabled/default
 uid=$(stat --printf %u /import)
 gid=$(stat --printf %g /import)
 
-# Fix the user + group ID, hopefully no clashes.
-sed -i "s|:1450:|:$gid:|" /etc/group
-sed -i "s|:1450:1450:|:$uid:$gid:|" /etc/passwd /etc/passwd-
+if [[ "$uid" -ne "0" ]]; then
+    # Fix the user + group ID, hopefully no clashes.
+    sed -i "s|:1450:|:$gid:|" /etc/group
+    sed -i "s|:1450:1450:|:$uid:$gid:|" /etc/passwd /etc/passwd-
+fi;
 
 # Correct permissions on the folder
 chown $uid:$gid /import -R
