@@ -55,7 +55,7 @@ ENV DEBUG=false \
     HISTORY_ID=none \
     REMOTE_HOST=none \
     GALAXY_URL=none \
-    RSTUDIO_FULL=0
+    RSTUDIO_FULL=1
 
 VOLUME ["/import"]
 WORKDIR /import/
