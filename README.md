@@ -17,14 +17,14 @@ This docker container is used by the [Galaxy-RStudio project](https://github.com
  ```
  The build process can take some time, but if finished you can run your container with:
  ```bash
- $ docker run -p 7777:8787 -v /home/user/foo/:/import/ -t rstudio-notebook
+ $ docker run -p 8787:8787 -v /home/user/foo/:/import/ -t rstudio-notebook
  ```
  and you will have a running [RStudio](http://rstudio.com) instance on ``http://localhost:8787/``.
 
 * Run a pre-built image from the docker registry
 
  ```bash
- $ docker run -p 7777:8787 -v `pwd`/foo:/import erasche/docker-rstudio-notebook
+ $ docker run -p 8787:8787 -v `pwd`/foo:/import erasche/docker-rstudio-notebook
  ```
 
 ### Environment Variables
