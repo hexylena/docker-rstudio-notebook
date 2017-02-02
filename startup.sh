@@ -24,19 +24,16 @@ chown $uid:$gid /import -R
 # Start the server. I dont' trust their daemonization
 /usr/lib/rstudio-server/bin/rserver --server-daemonize=0 &
 
-# RStudio users don't get the system environment for some reason (I need to
-# figure out a better way to fix this...). Right now we persist the environment
-# in a file which galaxy.py reads which is a little bit clunky and RStudio
-# specific
-echo "DEBUG=$DEBUG
-GALAXY_WEB_PORT=$GALAXY_WEB_PORT
-CORS_ORIGIN=$CORS_ORIGIN
-DOCKER_PORT=$DOCKER_PORT
-API_KEY=$API_KEY
-HISTORY_ID=$HISTORY_ID
-REMOTE_HOST=$REMOTE_HOST
-GALAXY_URL=$GALAXY_URL
-" > /etc/profile.d/galaxy.sh
+# Pass some system environment variables to RStudio environment
+echo "Sys.setenv(DEBUG=\"$DEBUG\")
+Sys.setenv(GALAXY_WEB_PORT=\"$GALAXY_WEB_PORT\")
+Sys.setenv(CORS_ORIGIN=\"$CORS_ORIGIN\")
+Sys.setenv(DOCKER_PORT=\"$DOCKER_PORT\")
+Sys.setenv(API_KEY=\"$API_KEY\")
+Sys.setenv(HISTORY_ID=\"$HISTORY_ID\")
+Sys.setenv(REMOTE_HOST=\"$REMOTE_HOST\")
+Sys.setenv(GALAXY_URL=\"$GALAXY_URL\")
+" >> /usr/lib/R/etc/Rprofile.site
 
 # Launch traffic monitor
 /monitor_traffic.sh &
