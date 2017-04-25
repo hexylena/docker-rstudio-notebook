@@ -71,7 +71,7 @@ ADD ./rserver.conf /etc/rstudio/rserver.conf
 # The Galaxy instance can copy in data that needs to be present to the Rstudio webserver
 RUN chmod +x /startup.sh && \
     Rscript /tmp/packages-gx.R && \
-    pip install galaxy-ie-helpers && \
+    pip install galaxy-ie-helpers>=0.2.1 && \
     groupadd -r rstudio -g 1450 && \
     useradd -u 1450 -r -g rstudio -d /import -c "RStudio User" \
         -p $(openssl passwd -1 rstudio) rstudio && \
