@@ -9,17 +9,11 @@
 # connection open from port 80, kill the server and herewith the docker container.
 
 while true; do
-    sleep 240
+    sleep ${DEFAULT_CONTAINER_RUNTIME:-240}
 
     if [ `netstat -t | grep -v CLOSE_WAIT | grep ':8787' | wc -l` -lt 3 ]
     then
         pkill nginx
-        # We will create new history elements with all data that is relevant,
-        # this means we can delete everything from /import/
-        if [[ "$DEBUG" == "false" ]];
-        then
-            rm -rf /import/;
-        fi
     fi
 
 done
