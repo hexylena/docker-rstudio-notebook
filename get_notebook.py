@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 import os
-import galaxy_ie_helpers
-from bioblend.galaxy.histories import HistoryClient
 
+import galaxy_ie_helpers
+
+from bioblend.galaxy.histories import HistoryClient
 
 hid = os.environ.get('DATASET_HID', None)
 history_id = os.environ['HISTORY_ID']
@@ -15,7 +16,6 @@ if additional_ids:
     hc = HistoryClient(gi)
     history = hc.show_history(history_id, contents=True)
     additional_ids = additional_ids.split(",")
-    for additional_id in additional_ids:
-        for hda in history:
-            if hda["id"] in additional_ids:
-                galaxy_ie_helpers.get(int(hda["hid"]))
+    for hda in history:
+        if hda["id"] in additional_ids:
+            galaxy_ie_helpers.get(int(hda["hid"]))
