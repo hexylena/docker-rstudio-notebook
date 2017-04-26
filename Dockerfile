@@ -66,6 +66,7 @@ ADD ./proxy.conf /proxy.conf
 ADD ./GalaxyConnector /tmp/GalaxyConnector
 ADD ./packages-gx.R /tmp/packages-gx.R
 ADD ./rserver.conf /etc/rstudio/rserver.conf
+ADD ./get_notebook.py /get_notebook.py
 
 # /import will be the universal mount-point for IPython
 # The Galaxy instance can copy in data that needs to be present to the Rstudio webserver

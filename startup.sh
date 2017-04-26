@@ -21,6 +21,7 @@ fi;
 # Correct permissions on the folder
 chown $uid:$gid /import -R
 
+python /get_notebook.py &
 # Start the server. I dont' trust their daemonization
 /usr/lib/rstudio-server/bin/rserver --server-daemonize=0 &
 
