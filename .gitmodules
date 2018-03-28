@@ -1,0 +1,3 @@
+[submodule "GalaxyConnector"]
+	path = GalaxyConnector
+	url = https://github.com/erasche/rGalaxyConnector
