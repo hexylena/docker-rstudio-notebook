@@ -1,7 +1,5 @@
 # Docker RStudio Container
 
-[![Docker RStudio Notebook](http://dockeri.co/image/erasche/docker-rstudio-notebook)](https://registry.hub.docker.com/u/erasche/docker-rstudio-notebook/)
-
 RStudio running in a docker container. This image can be used to integrate RStudio into Galaxy.
 A variety of different packages are pre-installed and can be used right away.
 
