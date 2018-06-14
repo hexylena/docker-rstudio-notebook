@@ -1,42 +1,51 @@
-# RStudio container used for Galaxy RStudio Integration
-#
-# VERSION       0.1.0
+FROM rocker/r-ver:3.5.0
 
-FROM ubuntu:14.04
+ARG RSTUDIO_VERSION
+## Comment the next line to use the latest RStudio Server version by default
+#ENV RSTUDIO_VERSION=${RSTUDIO_VERSION:-1.1.447}
+ENV PATH=/usr/lib/rstudio-server/bin:$PATH
+
+## Download and install RStudio server & dependencies
+## Attempts to get detect latest version, otherwise falls back to version given in $VER
+## Symlink pandoc, pandoc-citeproc so they are available system-wide
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends file git libapparmor1 \
+	libcurl4-openssl-dev libedit2 libssl-dev lsb-release psmisc python-setuptools \
+	sudo wget multiarch-support procps
+
+RUN wget -O libssl1.0.0.deb http://ftp.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u7_amd64.deb 
+RUN dpkg -i libssl1.0.0.deb 
+RUN rm libssl1.0.0.deb 
+
+ENV RSTUDIO_VERSION 1.1.453
+
+RUN wget http://download2.rstudio.org/rstudio-server-${RSTUDIO_VERSION}-amd64.deb && \
+    dpkg -i rstudio-server-${RSTUDIO_VERSION}-amd64.deb && \
+    rm /rstudio-server-${RSTUDIO_VERSION}-amd64.deb
 
 ENV DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8
 
-RUN apt-get -qq update && \
-    apt-get install --no-install-recommends -y apt-transport-https ca-certificates && \
-    echo "deb https://cran.rstudio.com/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list && \
-    apt-key adv --keyserver keys.gnupg.net --recv-key 06F90DE5381BA480 && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 51716619E084DAB9 && \
-    apt-get -qq update && \
-    apt-get install --no-install-recommends -y locales && \
-    echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && \
-    locale-gen en_US.UTF-8 && \
-    dpkg-reconfigure locales && \
-    apt-get install --no-install-recommends -y apt-transport-https \
-        r-base r-base-dev dpkg wget psmisc libssl1.0.0 procps sudo \
+RUN apt-get install --no-install-recommends -y locales
+RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
+RUN locale-gen en_US.UTF-8
+RUN dpkg-reconfigure locales
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get install --no-install-recommends -y \
+        wget psmisc libssl1.0.0 procps sudo \
         libcurl4-openssl-dev curl libxml2-dev nginx python python-pip net-tools \
-        lsb-release tcpdump unixodbc unixodbc-dev libmyodbc odbcinst odbc-postgresql \
+        lsb-release tcpdump unixodbc unixodbc-dev odbcinst odbc-postgresql \
         texlive-latex-base texlive-extra-utils texlive-fonts-recommended \
-        texlive-latex-recommended libapparmor1 libedit2 && \
-    pip install bioblend argparse && \
-    apt-get autoremove -y  && \
-    apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+        texlive-latex-recommended libapparmor1 libedit2
 
 
-# Build specific
-ENV RSTUDIO_VERSION 0.99.903
 
-# Install rstudio-server
-RUN wget http://download2.rstudio.org/rstudio-server-${RSTUDIO_VERSION}-amd64.deb && \
-    dpkg -i rstudio-server-${RSTUDIO_VERSION}-amd64.deb && \
-    rm /rstudio-server-${RSTUDIO_VERSION}-amd64.deb
+RUN pip install -U setuptools pip
+RUN pip install bioblend argparse
+RUN apt-get autoremove -y
+RUN apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD rsession.conf /etc/rstudio/rsession.conf
 
@@ -55,9 +64,6 @@ ENV DEBUG=false \
     GALAXY_URL=none \
     RSTUDIO_FULL=1
 
-VOLUME ["/import"]
-WORKDIR /import/
-
 ADD ./startup.sh /startup.sh
 ADD ./monitor_traffic.sh /monitor_traffic.sh
 ADD ./proxy.conf /proxy.conf
@@ -66,11 +72,13 @@ ADD ./packages-gx.R /tmp/packages-gx.R
 ADD ./rserver.conf /etc/rstudio/rserver.conf
 
 # /import will be the universal mount-point for IPython
+RUN apt-get update && apt-get install -y r-base-dev
 # The Galaxy instance can copy in data that needs to be present to the Rstudio webserver
 RUN chmod +x /startup.sh && \
     Rscript /tmp/packages-gx.R && \
     pip install galaxy-ie-helpers && \
     groupadd -r rstudio -g 1450 && \
+    mkdir /import && \
     useradd -u 1450 -r -g rstudio -d /import -c "RStudio User" \
         -p $(openssl passwd -1 rstudio) rstudio && \
     chown -R rstudio:rstudio /import
