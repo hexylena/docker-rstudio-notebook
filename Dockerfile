@@ -4,8 +4,6 @@
 
 FROM ubuntu:14.04
 
-MAINTAINER Eric Rasche <esr@tamu.edu>
-
 ENV DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
@@ -76,7 +74,8 @@ RUN chmod +x /startup.sh && \
     groupadd -r rstudio -g 1450 && \
     useradd -u 1450 -r -g rstudio -d /import -c "RStudio User" \
         -p $(openssl passwd -1 rstudio) rstudio && \
-    chown -R rstudio:rstudio /import
+    chown -R rstudio:rstudio /import && \
+    chmod 777 /import/
 
 # Must happen later, otherwise GalaxyConnector is loaded by default, and fails,
 # preventing ANY execution
