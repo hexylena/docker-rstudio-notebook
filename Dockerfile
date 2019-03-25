@@ -35,13 +35,15 @@ WORKDIR /import/
 
 ADD ./monitor_traffic.sh /monitor_traffic.sh
 ADD ./GalaxyConnector /tmp/GalaxyConnector
-ADD ./packages-gx.R /tmp/packages-gx.R
-ADD ./packages.R /tmp/packages.R
+ADD ./packages/ /tmp/packages/
 
 # The Galaxy instance can copy in data that needs to be present to the Rstudio webserver
-RUN Rscript /tmp/packages.R && \
-    Rscript /tmp/packages-gx.R && \
-    pip install galaxy-ie-helpers
+RUN Rscript /tmp/packages/updates.R
+RUN Rscript /tmp/packages/devtools.R
+RUN Rscript /tmp/packages/gx.R
+RUN Rscript /tmp/packages/other.R
+RUN Rscript /tmp/packages/bioconda.R
+RUN pip install galaxy-ie-helpers
 # Must happen later, otherwise GalaxyConnector is loaded by default, and fails,
 # preventing ANY execution
 COPY ./Rprofile.site /usr/lib/R/etc/Rprofile.site
