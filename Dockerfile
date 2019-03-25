@@ -37,7 +37,6 @@ ADD ./monitor_traffic.sh /monitor_traffic.sh
 ADD ./GalaxyConnector /tmp/GalaxyConnector
 ADD ./packages-gx.R /tmp/packages-gx.R
 ADD ./packages.R /tmp/packages.R
-ADD ./rserver.conf /etc/rstudio/rserver.conf
 
 # The Galaxy instance can copy in data that needs to be present to the Rstudio webserver
 RUN Rscript /tmp/packages.R && \
