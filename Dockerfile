@@ -2,7 +2,7 @@
 #
 # VERSION       0.1.0
 
-FROM ubuntu:14.04
+FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
