@@ -47,7 +47,7 @@ RUN Rscript /tmp/packages/bioconda.R
 RUN pip install galaxy-ie-helpers
 # Must happen later, otherwise GalaxyConnector is loaded by default, and fails,
 # preventing ANY execution
-COPY ./Rprofile.site /usr/lib/R/etc/Rprofile.site
+COPY ./Rprofile.site /usr/local/lib/R/etc/Rprofile.site
 
 
 EXPOSE 80

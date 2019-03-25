@@ -11,7 +11,7 @@
 while true; do
     sleep 240
 
-    if [ `netstat -t | grep -v CLOSE_WAIT | grep ':8787' | wc -l` -lt 3 ]
+    if [ `netstat -t | grep -v CLOSE_WAIT | grep ':80' | wc -l` -lt 3 ]
     then
         pkill nginx
         # We will create new history elements with all data that is relevant,

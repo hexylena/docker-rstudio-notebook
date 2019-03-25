@@ -13,7 +13,7 @@ Sys.setenv(API_KEY=\"$API_KEY\")
 Sys.setenv(HISTORY_ID=\"$HISTORY_ID\")
 Sys.setenv(REMOTE_HOST=\"$REMOTE_HOST\")
 Sys.setenv(GALAXY_URL=\"$GALAXY_URL\")
-" >> /usr/lib/R/etc/Rprofile.site
+" >> /usr/local/lib/R/etc/Rprofile.site
 
 # Launch traffic monitor
 /monitor_traffic.sh &
