@@ -39,6 +39,7 @@ ADD ./packages/ /tmp/packages/
 
 # The Galaxy instance can copy in data that needs to be present to the Rstudio webserver
 RUN Rscript /tmp/packages/updates.R
+RUN apt-get install zlib1g-dev
 RUN Rscript /tmp/packages/devtools.R
 RUN Rscript /tmp/packages/gx.R
 RUN Rscript /tmp/packages/other.R
