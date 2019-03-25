@@ -22,7 +22,7 @@ RUN apt-get -qq update && \
 
 RUN mkdir -p /etc/services.d/nginx
 
-COPY service-nginx-start /etc/services.d/nginx/start
+COPY service-nginx-start /etc/services.d/nginx/run
 #COPY service-nginx-stop  /etc/services.d/nginx/finish
 COPY proxy.conf          /etc/nginx/sites-enabled/default
 
@@ -50,4 +50,11 @@ WORKDIR /import/
 
 # Must happen later, otherwise GalaxyConnector is loaded by default, and fails,
 # preventing ANY execution
-COPY ./Rprofile.site /usr/lib/R/etc/Rprofile.site
+
+ADD ./startup.sh /startup.sh
+ADD ./monitor_traffic.sh /monitor_traffic.sh
+ADD ./proxy.conf /proxy.conf
+ADD ./GalaxyConnector /tmp/GalaxyConnector
+ADD ./packages-gx.R /tmp/packages-gx.R
+ADD ./rserver.conf /etc/rstudio/rserver.conf
+ADD ./Rprofile.site /usr/lib/R/etc/Rprofile.site

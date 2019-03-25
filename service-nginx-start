@@ -1,6 +1,8 @@
-#!/bin/bash
-sed -i "s| '\*'; # IE_CORS_ORIGIN| '${CORS_ORIGIN}';|" /etc/nginx/sites-enabled/default;
-sed -i "s|PROXY_PREFIX|${PROXY_PREFIX}|"               /etc/nginx/sites-enabled/default;
+#!/usr/bin/with-contenv bash
+env > /asdf
+
+sed -i "s| '\*'; # IE_CORS_ORIGIN| '${CORS_ORIGIN}';|g" /etc/nginx/sites-enabled/default;
+sed -i "s|PROXY_PREFIX|${PROXY_PREFIX}|g"               /etc/nginx/sites-enabled/default;
 
 # Pass some system environment variables to RStudio environment
 echo "Sys.setenv(DEBUG=\"$DEBUG\")
