@@ -7,10 +7,8 @@ RUN apt-get -qq update && \
         libcurl4-openssl-dev curl libxml2-dev nginx python python-pip net-tools \
         lsb-release tcpdump unixodbc unixodbc-dev odbcinst odbc-postgresql \
         texlive-latex-base texlive-extra-utils texlive-fonts-recommended \
-        texlive-latex-recommended libapparmor1 libedit2 libcurl4-openssl-dev libssl-dev && \
+        texlive-latex-recommended libapparmor1 libedit2 libcurl4-openssl-dev libssl-dev zlib1g-dev && \
     pip install bioblend argparse
-
-	#libmyodbc
 
 RUN mkdir -p /etc/services.d/nginx
 
@@ -38,13 +36,13 @@ ADD ./GalaxyConnector /tmp/GalaxyConnector
 ADD ./packages/ /tmp/packages/
 
 # The Galaxy instance can copy in data that needs to be present to the Rstudio webserver
-RUN Rscript /tmp/packages/updates.R
-RUN apt-get install zlib1g-dev
-RUN Rscript /tmp/packages/devtools.R
-RUN Rscript /tmp/packages/gx.R
-RUN Rscript /tmp/packages/other.R
-RUN Rscript /tmp/packages/bioconda.R
-RUN pip install galaxy-ie-helpers
+RUN Rscript /tmp/packages/updates.R && \
+    Rscript /tmp/packages/devtools.R && \
+    Rscript /tmp/packages/gx.R && \
+    Rscript /tmp/packages/other.R && \
+    Rscript /tmp/packages/bioconda.R && \
+    pip install galaxy-ie-helpers
+
 # Must happen later, otherwise GalaxyConnector is loaded by default, and fails,
 # preventing ANY execution
 COPY ./Rprofile.site /usr/local/lib/R/etc/Rprofile.site
