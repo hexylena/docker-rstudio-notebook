@@ -7,7 +7,8 @@ RUN apt-get -qq update && \
         libcurl4-openssl-dev curl libxml2-dev nginx python python-pip net-tools \
         lsb-release tcpdump unixodbc unixodbc-dev odbcinst odbc-postgresql \
         texlive-latex-base texlive-extra-utils texlive-fonts-recommended \
-        texlive-latex-recommended libapparmor1 libedit2 && \
+        texlive-latex-recommended libapparmor1 libedit2 libcurl4-openssl-dev libssl-dev \
+        libcurl4-gnutls-dev && \
     pip install bioblend argparse
 
 	#libmyodbc
