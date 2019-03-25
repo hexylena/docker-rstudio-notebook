@@ -27,5 +27,4 @@ if(Sys.getenv(x = "RSTUDIO_FULL", unset="0") == "1") {
     biocLite("Biostrings")
     biocLite("GenomicRanges")
     biocLite("Rsamtools")
-    biocLite("affy")
 }
