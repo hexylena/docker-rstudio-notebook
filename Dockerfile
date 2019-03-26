@@ -46,6 +46,6 @@ RUN Rscript /tmp/packages/updates.R && \
 # Must happen later, otherwise GalaxyConnector is loaded by default, and fails,
 # preventing ANY execution
 COPY ./Rprofile.site /usr/local/lib/R/etc/Rprofile.site
-
+RUN pip install git+https://github.com/bgruening/galaxy_ie_helpers.git@master
 
 EXPOSE 80
