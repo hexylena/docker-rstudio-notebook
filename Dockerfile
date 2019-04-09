@@ -36,16 +36,15 @@ ADD ./GalaxyConnector /tmp/GalaxyConnector
 ADD ./packages/ /tmp/packages/
 
 # The Galaxy instance can copy in data that needs to be present to the Rstudio webserver
-RUN Rscript /tmp/packages/updates.R && \
-    Rscript /tmp/packages/devtools.R && \
-    Rscript /tmp/packages/gx.R && \
-    Rscript /tmp/packages/other.R && \
-    Rscript /tmp/packages/bioconda.R && \
-    pip install galaxy-ie-helpers
+RUN Rscript /tmp/packages/updates.R
+RUN Rscript /tmp/packages/devtools.R
+RUN Rscript /tmp/packages/gx.R
+RUN Rscript /tmp/packages/other.R
+RUN Rscript /tmp/packages/bioconda.R
+RUN pip install git+https://github.com/bgruening/galaxy_ie_helpers.git@master
 
 # Must happen later, otherwise GalaxyConnector is loaded by default, and fails,
 # preventing ANY execution
 COPY ./Rprofile.site /usr/local/lib/R/etc/Rprofile.site
-RUN pip install git+https://github.com/bgruening/galaxy_ie_helpers.git@master
 
 EXPOSE 80
