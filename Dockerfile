@@ -28,7 +28,6 @@ ENV DEBUG=false \
     RSTUDIO_FULL=1 \
     DISABLE_AUTH=true
 
-VOLUME ["/import"]
 WORKDIR /import/
 
 ADD ./monitor_traffic.sh /monitor_traffic.sh
@@ -42,6 +41,7 @@ RUN Rscript /tmp/packages/gx.R
 RUN Rscript /tmp/packages/other.R
 RUN Rscript /tmp/packages/bioconda.R
 RUN pip install git+https://github.com/bgruening/galaxy_ie_helpers.git@master
+RUN chmod 777 /import/
 
 # Must happen later, otherwise GalaxyConnector is loaded by default, and fails,
 # preventing ANY execution
