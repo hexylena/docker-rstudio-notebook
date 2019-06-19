@@ -1,17 +1,9 @@
 options(repos=structure(c(CRAN="https://cran.rstudio.com/")))
 
 # bioconductor base
-source("http://bioconductor.org/biocLite.R")
-biocLite()
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install()
 
 # bioconductor packages
-biocLite("edgeR")
-biocLite("Rgraphviz")
-biocLite("biomaRt")
-biocLite("topGO")
-biocLite("limma")
-biocLite("DESeq2")
-biocLite("cummeRbund")
-biocLite("Biostrings")
-biocLite("GenomicRanges")
-biocLite("Rsamtools")
+BiocManager::install(c("edgeR", "Rgraphviz", "biomaRt", "topGO", "limma", "DESeq2", "cummeRbund", "Biostrings", "GenomicRanges", "Rsamtools"))
