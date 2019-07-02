@@ -18,7 +18,7 @@ while true; do
         # this means we can delete everything from /import/
         if [[ "$DEBUG" == "false" ]];
         then
-            rm -rf /import/;
+            rm -rf /import/*;
         fi
     fi
 
