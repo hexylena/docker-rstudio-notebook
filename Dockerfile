@@ -13,7 +13,7 @@ RUN apt-get -qq update && \
 RUN mkdir -p /etc/services.d/nginx
 
 COPY service-nginx-start /etc/services.d/nginx/run
-#COPY service-nginx-stop  /etc/services.d/nginx/finish
+COPY service-nginx-stop  /etc/services.d/nginx/finish
 COPY proxy.conf          /etc/nginx/sites-enabled/default
 
 # ENV variables to replace conf file from Galaxy
