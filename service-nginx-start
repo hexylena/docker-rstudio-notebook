@@ -15,7 +15,5 @@ Sys.setenv(REMOTE_HOST=\"$REMOTE_HOST\")
 Sys.setenv(GALAXY_URL=\"$GALAXY_URL\")
 " >> /usr/local/lib/R/etc/Rprofile.site
 
-# Launch traffic monitor
-/monitor_traffic.sh &
 # And nginx in foreground mode.
 nginx -g 'daemon off;'
