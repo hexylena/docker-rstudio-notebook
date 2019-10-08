@@ -2,18 +2,17 @@
 
 FROM rocker/rstudio
 
-RUN wget https://s3.amazonaws.com/rstudio-ide-build/server/bionic/amd64/rstudio-server-1.3.489-amd64.deb
-RUN apt-get -qq update && \
+RUN wget https://s3.amazonaws.com/rstudio-ide-build/server/bionic/amd64/rstudio-server-1.3.489-amd64.deb && \
+    apt-get -qq update && \
     apt-get install --no-install-recommends -y wget psmisc procps sudo \
         libcurl4-openssl-dev curl libxml2-dev nginx python python-pip net-tools \
         lsb-release tcpdump unixodbc unixodbc-dev odbcinst odbc-postgresql \
         texlive-latex-base texlive-extra-utils texlive-fonts-recommended \
         texlive-latex-recommended libapparmor1 libedit2 libcurl4-openssl-dev libssl-dev zlib1g-dev syslog-ng nano vim && \
     pip install bioblend argparse && \
-    dpkg -i rstudio-server-1.3.489-amd64.deb
-RUN rm rstudio-server-1.3.489-amd64.deb
-
-RUN mkdir -p /etc/services.d/nginx && \
+    dpkg -i rstudio-server-1.3.489-amd64.deb && \
+    rm rstudio-server-1.3.489-amd64.deb && \
+    mkdir -p /etc/services.d/nginx && \
     chmod 777 /tmp
 
 COPY service-nginx-start /etc/services.d/nginx/run
