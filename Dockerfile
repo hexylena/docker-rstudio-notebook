@@ -33,7 +33,6 @@ ENV DEBUG=false \
 
 WORKDIR /import/
 
-ADD ./monitor_traffic.sh /monitor_traffic.sh
 ADD ./GalaxyConnector /tmp/GalaxyConnector
 ADD ./packages/ /tmp/packages/
 ADD ./logging.conf /etc/rstudio/
