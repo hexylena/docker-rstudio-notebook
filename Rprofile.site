@@ -1,3 +1,4 @@
 library("GalaxyConnector")
 .First <- function() cat("\n   Welcome to the Galaxy R Interactive Environment!\n\nThe convenience functions gx_put() and gx_get() are available to you to interact with your current Galaxy history. You can save your workspace with gx_save(). \n\nFor example, gx_get(42) will fetch dataset 42 from your history and return the file location \n\nSome packages are pre-installed for you; RCurl, XML, shiny, ggvis, dplyr, tidyr, ggplot2, reshape2, RODBC, Bioconductor core packages, edgeR, Gviz, Rgraphviz, limma, DESeq2, cummeRbund, affay, Rsamtools")
 options(encoding = "UTF-8")
+setwd("import")

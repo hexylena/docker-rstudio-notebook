@@ -41,7 +41,7 @@ RUN Rscript /tmp/packages/gx.R
 RUN Rscript /tmp/packages/other.R
 RUN Rscript /tmp/packages/bioconda.R
 RUN pip install git+https://github.com/bgruening/galaxy_ie_helpers.git@master
-RUN chmod 777 /import/
+RUN chmod -R 777 /import/ /home/rstudio && ln -s /import /home/rstudio/import
 
 # Must happen later, otherwise GalaxyConnector is loaded by default, and fails,
 # preventing ANY execution
