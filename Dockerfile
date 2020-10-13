@@ -7,7 +7,8 @@ RUN apt-get -qq update && \
         libcurl4-openssl-dev curl libxml2-dev nginx python python-pip net-tools \
         lsb-release tcpdump unixodbc unixodbc-dev odbcinst odbc-postgresql \
         texlive-latex-base texlive-extra-utils texlive-fonts-recommended \
-        texlive-latex-recommended libapparmor1 libedit2 libcurl4-openssl-dev libssl-dev zlib1g-dev && \
+        texlive-latex-recommended libapparmor1 libedit2 libcurl4-openssl-dev libssl-dev zlib1g-dev \
+        libbz2-dev liblzma-dev && \
     pip install bioblend argparse
 
 RUN mkdir -p /etc/services.d/nginx
