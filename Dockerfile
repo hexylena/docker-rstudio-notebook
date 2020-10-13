@@ -4,12 +4,12 @@ FROM rocker/rstudio
 
 RUN apt-get -qq update && \
     apt-get install --no-install-recommends -y wget psmisc procps sudo \
-        libcurl4-openssl-dev curl libxml2-dev nginx python python-pip net-tools \
+        libcurl4-openssl-dev curl libxml2-dev nginx python python3-pip net-tools \
         lsb-release tcpdump unixodbc unixodbc-dev odbcinst odbc-postgresql \
         texlive-latex-base texlive-extra-utils texlive-fonts-recommended \
         texlive-latex-recommended libapparmor1 libedit2 libcurl4-openssl-dev libssl-dev zlib1g-dev \
         libbz2-dev liblzma-dev && \
-    pip install bioblend argparse
+    pip3 install bioblend argparse
 
 RUN mkdir -p /etc/services.d/nginx
 
@@ -41,7 +41,7 @@ RUN Rscript /tmp/packages/devtools.R
 RUN Rscript /tmp/packages/gx.R
 RUN Rscript /tmp/packages/other.R
 RUN Rscript /tmp/packages/bioconda.R
-RUN pip install git+https://github.com/bgruening/galaxy_ie_helpers.git@master
+RUN pip3 install git+https://github.com/bgruening/galaxy_ie_helpers.git@master
 RUN chmod 777 /import/
 
 # Must happen later, otherwise GalaxyConnector is loaded by default, and fails,
