@@ -1,22 +1,20 @@
 # RStudio container used for Galaxy RStudio Integration
 
-FROM rocker/rstudio
+FROM rocker/rstudio:4.0.2
 
-RUN wget https://s3.amazonaws.com/rstudio-ide-build/server/bionic/amd64/rstudio-server-1.3.489-amd64.deb && \
-    apt-get -qq update && \
+RUN apt-get -qq update && \
     apt-get install --no-install-recommends -y wget psmisc procps sudo \
-        libcurl4-openssl-dev curl libxml2-dev nginx python python-pip net-tools \
+        libcurl4-openssl-dev curl libxml2-dev nginx python python3-pip net-tools \
         lsb-release tcpdump unixodbc unixodbc-dev odbcinst odbc-postgresql \
         texlive-latex-base texlive-extra-utils texlive-fonts-recommended \
-        texlive-latex-recommended libapparmor1 libedit2 libcurl4-openssl-dev libssl-dev zlib1g-dev syslog-ng nano vim && \
-    pip install bioblend argparse && \
-    dpkg -i rstudio-server-1.3.489-amd64.deb && \
-    rm rstudio-server-1.3.489-amd64.deb && \
+        texlive-latex-recommended libapparmor1 libedit2 libcurl4-openssl-dev libssl-dev zlib1g-dev \
+        syslog-ng nano vim libbz2-dev liblzma-dev && \
+    pip3 install bioblend argparse && \
     mkdir -p /etc/services.d/nginx && \
     chmod 777 /tmp
 
 COPY service-nginx-start /etc/services.d/nginx/run
-COPY service-nginx-stop  /etc/services.d/nginx/finish
+#COPY service-nginx-stop  /etc/services.d/nginx/finish
 COPY proxy.conf          /etc/nginx/sites-enabled/default
 
 # ENV variables to replace conf file from Galaxy
@@ -43,7 +41,7 @@ RUN Rscript /tmp/packages/updates.R && \
     Rscript /tmp/packages/gx.R && \
     Rscript /tmp/packages/other.R && \
     Rscript /tmp/packages/bioconda.R && \
-    pip install git+https://github.com/bgruening/galaxy_ie_helpers.git@master && \
+    pip3 install git+https://github.com/bgruening/galaxy_ie_helpers.git@master && \
     chmod 777 /import/
 
 # Must happen later, otherwise GalaxyConnector is loaded by default, and fails,
