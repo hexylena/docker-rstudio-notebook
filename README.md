@@ -1,35 +1,10 @@
 # Docker RStudio Container
 
-RStudio running in a docker container. This image can be used to integrate RStudio into Galaxy.
+RStudio running in a docker container. This image can be used to integrate RStudio into Galaxy through the Interactive Tools mechanism.
+
 A variety of different packages are pre-installed and can be used right away.
 
-This docker container is used by the [Galaxy-RStudio project](https://github.com/erasche/docker-rstudio-notebook).
-
-## Usage
-
-* Build your own image and run it
-
- [Docker](https://www.docker.com) is a pre-requirement for this project. You can build the container with:
- ```bash
- $ docker build -t rstudio-notebook .
- ```
- The build process can take some time, but if finished you can run your container with:
- ```bash
- $ docker run -p 8787:8787 -v /home/user/foo/:/import/ -t rstudio-notebook
- ```
- and you will have a running [RStudio](http://rstudio.com) instance on ``http://localhost:8787/``.
-
-* Run a pre-built image from the docker registry
-
- ```bash
- $ docker run -p 8787:8787 -v `pwd`/foo:/import erasche/docker-rstudio-notebook
- ```
-
-### Environment Variables
-
-Several environment variables are available by default, per IE rough standards
-
-#### Build-Time Variables
+## Build-Time Variables
 
 Variable       | Use
 -------------- | ----
