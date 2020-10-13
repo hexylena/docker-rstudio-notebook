@@ -11,7 +11,8 @@ RUN apt-get -qq update && \
         libbz2-dev liblzma-dev && \
     pip3 install bioblend argparse
 
-RUN mkdir -p /etc/services.d/nginx
+RUN mkdir -p /etc/services.d/nginx && \
+    chmod 777 /tmp
 
 COPY service-nginx-start /etc/services.d/nginx/run
 #COPY service-nginx-stop  /etc/services.d/nginx/finish
@@ -31,9 +32,9 @@ ENV DEBUG=false \
 
 WORKDIR /import/
 
-ADD ./monitor_traffic.sh /monitor_traffic.sh
 ADD ./GalaxyConnector /tmp/GalaxyConnector
 ADD ./packages/ /tmp/packages/
+ADD ./logging.conf /etc/rstudio/
 
 # The Galaxy instance can copy in data that needs to be present to the Rstudio webserver
 RUN Rscript /tmp/packages/updates.R
