@@ -1,6 +1,6 @@
 # RStudio container used for Galaxy RStudio Integration
 
-FROM rocker/rstudio:4.0.2
+FROM rocker/rstudio:4.0.3
 
 RUN apt-get -qq update && \
     apt-get install --no-install-recommends -y wget psmisc procps sudo \
