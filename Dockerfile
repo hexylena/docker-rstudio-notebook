@@ -17,7 +17,7 @@ COPY service-nginx-start /etc/services.d/nginx/run
 #COPY service-nginx-stop  /etc/services.d/nginx/finish
 COPY proxy.conf          /etc/nginx/sites-enabled/default
 
-RUN echo 'SYSLOGNG_OPTS="--caps cap_sys_admin,cap_chown,cap_dac_override,cap_net_bind_service,cap_fowner=eip"' >> /etc/syslog-ng/conf.d/rstudio.conf
+RUN echo 'SYSLOGNG_OPTS="--no-caps"' >> /etc/default/syslog-ng
 
 # ENV variables to replace conf file from Galaxy
 ENV DEBUG=false \
