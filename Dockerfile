@@ -1,8 +1,9 @@
 # RStudio container used for Galaxy RStudio Integration
 
-FROM rocker/rstudio:3.6.3
+FROM rocker/rstudio:4.0.2
 
-RUN apt-get -qq update && \
+RUN wget https://s3.amazonaws.com/rstudio-ide-build/server/bionic/amd64/rstudio-server-1.3.489-amd64.deb && \
+    apt-get -qq update && \
     apt-get install --no-install-recommends -y wget psmisc procps sudo \
         libcurl4-openssl-dev curl libxml2-dev nginx python python3-pip net-tools \
         lsb-release tcpdump unixodbc unixodbc-dev odbcinst odbc-postgresql \
@@ -10,6 +11,8 @@ RUN apt-get -qq update && \
         texlive-latex-recommended libapparmor1 libedit2 libcurl4-openssl-dev libssl-dev zlib1g-dev \
         syslog-ng nano vim libbz2-dev liblzma-dev && \
     pip3 install bioblend argparse && \
+    dpkg -i rstudio-server-1.3.489-amd64.deb && \
+    rm rstudio-server-1.3.489-amd64.deb && \
     mkdir -p /etc/services.d/nginx && \
     chmod 777 /tmp
 
