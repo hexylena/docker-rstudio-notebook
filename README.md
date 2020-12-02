@@ -4,6 +4,14 @@ RStudio running in a docker container. This image can be used to integrate RStud
 
 A variety of different packages are pre-installed and can be used right away.
 
+## Cloning the repository
+
+This repository has submodules, please clone recursively:
+
+```
+git clone -r https://github.com/hexylena/docker-rstudio-notebook
+```
+
 ## Build-Time Variables
 
 Variable       | Use
