@@ -9,7 +9,7 @@ A variety of different packages are pre-installed and can be used right away.
 This repository has submodules, please clone recursively:
 
 ```
-git clone -r https://github.com/hexylena/docker-rstudio-notebook
+git clone --recursive https://github.com/hexylena/docker-rstudio-notebook
 ```
 
 ## Build-Time Variables
