@@ -77,6 +77,8 @@ RUN /opt/miniconda/bin/Rscript /tmp/packages/gx.R
 
 # Must happen later, otherwise GalaxyConnector is loaded by default, and fails,
 # preventing ANY execution
-COPY ./Rprofile.site /usr/local/lib/R/etc/Rprofile.site
+#COPY ./Rprofile.site /opt/miniconda/lib/R/etc/Rprofile.site
+
+COPY ./Rprofile.site /home/rstudio/.Rprofile
 
 EXPOSE 80
