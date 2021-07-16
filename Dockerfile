@@ -1,18 +1,49 @@
 # RStudio container used for Galaxy RStudio Integration
 
-FROM rocker/rstudio:4.0.2
+FROM rocker/rstudio:4.1.0
+
+ENV miniconda3_version="py39_4.9.2" \
+    miniconda_bin_dir="/opt/miniconda/bin" \
+    PATH="${PATH}:${miniconda_bin_dir}"
 
 RUN apt-get -qq update && \
-    apt-get install --no-install-recommends -y wget psmisc procps sudo \
-        libcurl4-openssl-dev curl libxml2-dev nginx python python3-pip net-tools \
-        lsb-release tcpdump unixodbc unixodbc-dev odbcinst odbc-postgresql \
-        texlive-latex-base texlive-extra-utils texlive-fonts-recommended \
-        texlive-latex-recommended libapparmor1 libedit2 libcurl4-openssl-dev libssl-dev zlib1g-dev \
-        libbz2-dev liblzma-dev && \
+    apt-get install --no-install-recommends -y wget curl psmisc procps sudo \
+    libcurl4-openssl-dev curl libxml2-dev nginx python python3-pip net-tools \
+    lsb-release tcpdump unixodbc unixodbc-dev odbcinst odbc-postgresql \
+    texlive-latex-base texlive-extra-utils texlive-fonts-recommended \
+    texlive-latex-recommended libapparmor1 libedit2 libcurl4-openssl-dev libssl-dev zlib1g-dev \
+    libbz2-dev liblzma-dev && \
     pip3 install bioblend argparse
 
-RUN mkdir -p /etc/services.d/nginx && \
-    chmod 777 /tmp
+# Install miniconda
+RUN chmod 777 /opt/
+USER rstudio
+RUN cd /tmp/ && curl -fsSLO https://repo.anaconda.com/miniconda/Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
+    && bash Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
+    -b \
+    -p /opt/miniconda \
+    && rm -f Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
+    && chown -R rstudio:rstudio /opt/miniconda \
+    && chmod -R go-w /opt/miniconda
+
+RUN  /opt/miniconda/bin/conda clean -tipsy \
+    && /opt/miniconda/bin/conda clean -a \
+    && /opt/miniconda/bin/conda init \
+    && echo ". /opt/miniconda/etc/profile.d/conda.sh" >> ~/.bashrc \
+    && echo "conda activate base" >> ~/.bashrc \
+    && /opt/miniconda/bin/conda config --add channels bioconda \
+    && /opt/miniconda/bin/conda config --add channels conda-forge \
+    && /opt/miniconda/bin/conda install mamba -y
+
+
+COPY requirements.txt /tmp/requirements.txt
+RUN /opt/miniconda/bin/mamba install --file /tmp/requirements.txt -y
+
+USER root
+
+RUN ln -s /opt/miniconda/etc/profile.d/conda.sh /etc/profile.d/conda.sh \
+    && mkdir -p /etc/services.d/nginx \
+    && chmod 777 /tmp
 
 COPY service-nginx-start /etc/services.d/nginx/run
 #COPY service-nginx-stop  /etc/services.d/nginx/finish
@@ -37,13 +68,12 @@ ADD ./packages/ /tmp/packages/
 ADD ./logging.conf /etc/rstudio/
 
 # The Galaxy instance can copy in data that needs to be present to the Rstudio webserver
-RUN Rscript /tmp/packages/updates.R
-RUN Rscript /tmp/packages/devtools.R
-RUN Rscript /tmp/packages/gx.R
-RUN Rscript /tmp/packages/other.R
-RUN Rscript /tmp/packages/bioconda.R
-RUN pip3 install git+https://github.com/bgruening/galaxy_ie_helpers.git@master
 RUN chmod 777 /import/
+
+RUN sed -i 's|/usr/local/bin/R|/opt/miniconda/bin/R|g' /etc/rstudio/disable_auth_rserver.conf
+
+
+RUN /opt/miniconda/bin/Rscript /tmp/packages/gx.R
 
 # Must happen later, otherwise GalaxyConnector is loaded by default, and fails,
 # preventing ANY execution

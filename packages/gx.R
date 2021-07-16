@@ -1,2 +1,3 @@
 library(devtools)
-install("/tmp/GalaxyConnector")
+setwd("/tmp/GalaxyConnector")
+install(".")
