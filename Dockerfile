@@ -70,8 +70,10 @@ ADD ./logging.conf /etc/rstudio/
 # The Galaxy instance can copy in data that needs to be present to the Rstudio webserver
 RUN chmod 777 /import/
 
-RUN sed -i 's|/usr/local/bin/R|/opt/miniconda/bin/R|g' /etc/rstudio/disable_auth_rserver.conf
-
+# the symlinks should be removed once the R scripts for gx_get/gx_put are smart enough to take the global put/get
+RUN sed -i 's|/usr/local/bin/R|/opt/miniconda/bin/R|g' /etc/rstudio/disable_auth_rserver.conf \
+    && ln -s /opt/miniconda/bin/get /usr/local/bin/get \
+    && ln -s /opt/miniconda/bin/put /usr/local/bin/put
 
 RUN /opt/miniconda/bin/Rscript /tmp/packages/gx.R
 
