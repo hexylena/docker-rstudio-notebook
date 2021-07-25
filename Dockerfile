@@ -4,7 +4,8 @@ FROM rocker/rstudio:4.1.0
 
 ENV miniconda3_version="py39_4.9.2" \
     miniconda_bin_dir="/opt/miniconda/bin" \
-    PATH="${PATH}:${miniconda_bin_dir}"
+    PATH="${PATH}:${miniconda_bin_dir}" \
+    R_HOME='/opt/miniconda/lib/R'
 
 RUN apt-get -qq update && \
     apt-get install --no-install-recommends -y wget curl psmisc procps sudo \
