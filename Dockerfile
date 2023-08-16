@@ -1,8 +1,8 @@
 # RStudio container used for Galaxy RStudio Integration
 
-FROM rocker/rstudio:4.1.0
+FROM rocker/rstudio:4.3.1
 
-ENV miniconda3_version="py39_4.9.2" \
+ENV miniconda3_version="py311_23.5.2-0" \
     miniconda_bin_dir="/opt/miniconda/bin" \
     PATH="${PATH}:${miniconda_bin_dir}" \
     R_HOME='/opt/miniconda/lib/R'
