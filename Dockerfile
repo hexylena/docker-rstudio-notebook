@@ -2,53 +2,62 @@
 
 FROM rocker/rstudio:4.3.1
 
-ENV miniconda3_version="py311_23.5.2-0" \
-    miniconda_bin_dir="/opt/miniconda/bin" \
-    PATH="${PATH}:${miniconda_bin_dir}" \
+ARG CONDA_VERSION=23.1.0
+ARG SUFFIX=4
+ARG MINIFORGE_VERSION=${CONDA_VERSION}-${SUFFIX}
+
+ENV CONDA_PATH=/opt/miniconda \
+    MINICONDA_BIN_DIR="/opt/miniconda/bin" \
+    PATH="${PATH}:${MINICONDA_BIN_DIR}" \
     R_HOME='/opt/miniconda/lib/R'
 
 RUN apt-get -qq update && \
-    apt-get install --no-install-recommends -y wget curl psmisc procps sudo \
-    libcurl4-openssl-dev curl libxml2-dev nginx python python3-pip net-tools \
-    lsb-release tcpdump unixodbc unixodbc-dev odbcinst odbc-postgresql \
+    apt-get install --no-install-recommends -y wget psmisc procps sudo \
+    libcurl4-openssl-dev curl libxml2-dev net-tools \
+    lsb-release unixodbc unixodbc-dev odbcinst odbc-postgresql \
     texlive-latex-base texlive-extra-utils texlive-fonts-recommended \
     texlive-latex-recommended libapparmor1 libedit2 libcurl4-openssl-dev libssl-dev zlib1g-dev \
     libbz2-dev liblzma-dev && \
-    pip3 install bioblend argparse
+    apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Install miniconda
-RUN chmod 777 /opt/
-USER rstudio
-RUN cd /tmp/ && curl -fsSLO https://repo.anaconda.com/miniconda/Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
-    && bash Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
-    -b \
-    -p /opt/miniconda \
-    && rm -f Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
-    && chown -R rstudio:rstudio /opt/miniconda \
-    && chmod -R go-w /opt/miniconda
-
-RUN  /opt/miniconda/bin/conda clean -tipsy \
-    && /opt/miniconda/bin/conda clean -a \
-    && /opt/miniconda/bin/conda init \
-    && echo ". /opt/miniconda/etc/profile.d/conda.sh" >> ~/.bashrc \
-    && echo "conda activate base" >> ~/.bashrc \
-    && /opt/miniconda/bin/conda config --add channels bioconda \
-    && /opt/miniconda/bin/conda config --add channels conda-forge \
-    && /opt/miniconda/bin/conda install mamba -y
-
+RUN cd /opt/ && \
+    wget -q  "https://github.com/conda-forge/miniforge/releases/download/${MINIFORGE_VERSION}/Miniforge3-${MINIFORGE_VERSION}-Linux-x86_64.sh" \
+        -O miniforge3.sh && \
+    bash "./miniforge3.sh" -b -p ${CONDA_PATH} && \
+    rm ./miniforge3.sh && \
+    ${MINICONDA_BIN_DIR}/conda clean -tipy && \
+    echo "conda activate base" >> "$CONDA_PATH/etc/profile.d/conda.sh" && \
+    ln -s "$CONDA_PATH/etc/profile.d/conda.sh" /etc/profile.d/conda.sh && \
+    echo ". $CONDA_PATH/etc/profile.d/conda.sh" >> ~/.bashrc && \
+    chmod 777 ${CONDA_PATH} -R && \
+    chmod 777 /tmp
 
 COPY requirements.txt /tmp/requirements.txt
-RUN /opt/miniconda/bin/mamba install --file /tmp/requirements.txt -y
+
+USER rstudio
+
+#RUN cd /tmp/ && curl -fsSLO https://repo.anaconda.com/miniconda/Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
+#    && bash Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
+#    -b \
+#    -p /opt/miniconda \
+#    && rm -f Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
+#    && chown -R rstudio:rstudio /opt/miniconda \
+#    && chmod -R go-w /opt/miniconda
+
+RUN /opt/miniconda/bin/conda update -n base --yes conda \
+    && /opt/miniconda/bin/conda config --append channels bioconda \
+    && /opt/miniconda/bin/conda install --yes conda-libmamba-solver \
+    && /opt/miniconda/bin/conda config --set solver libmamba \
+    && /opt/miniconda/bin/conda install --file /tmp/requirements.txt -y \
+    && /opt/miniconda/bin/conda clean -a
 
 USER root
 
-RUN ln -s /opt/miniconda/etc/profile.d/conda.sh /etc/profile.d/conda.sh \
-    && mkdir -p /etc/services.d/nginx \
-    && chmod 777 /tmp
-
-COPY service-nginx-start /etc/services.d/nginx/run
+#COPY service-nginx-start /etc/services.d/nginx/run
 #COPY service-nginx-stop  /etc/services.d/nginx/finish
-COPY proxy.conf          /etc/nginx/sites-enabled/default
+#COPY proxy.conf          /etc/nginx/sites-enabled/default
 
 # ENV variables to replace conf file from Galaxy
 ENV DEBUG=false \

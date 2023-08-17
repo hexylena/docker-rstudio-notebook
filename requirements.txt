@@ -30,4 +30,5 @@ bioconductor-affy
 bioconductor-rsamtools
 
 ## python libraries
+bioblend
 galaxy-ie-helpers
