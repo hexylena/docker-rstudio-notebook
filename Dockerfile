@@ -1,6 +1,6 @@
 # RStudio container used for Galaxy RStudio Integration
 
-FROM rocker/rstudio:4.3.1
+FROM rocker/rstudio:4.3.2
 
 ARG CONDA_VERSION=23.1.0
 ARG SUFFIX=4
