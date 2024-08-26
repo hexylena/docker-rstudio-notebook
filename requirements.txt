@@ -23,13 +23,12 @@ r-readxl
 r-data.table
 r-reticulate
 r-cowplot
-r-heaven
 r-rmarkdown
 r-httr
 r-survival
 r-corrplot
 r-forecast
-r-sqlite
+r-rsqlite
 
 bioconductor-edger
 bioconductor-gviz
