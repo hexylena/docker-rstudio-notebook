@@ -1,9 +1,9 @@
 # RStudio container used for Galaxy RStudio Integration
 
-FROM rocker/rstudio:4.3.1
+FROM rocker/rstudio:4.4.1
 
-ARG CONDA_VERSION=23.1.0
-ARG SUFFIX=4
+ARG CONDA_VERSION=24.3.0
+ARG SUFFIX=0
 ARG MINIFORGE_VERSION=${CONDA_VERSION}-${SUFFIX}
 
 ENV CONDA_PATH=/opt/miniconda \
@@ -38,18 +38,8 @@ COPY requirements.txt /tmp/requirements.txt
 
 USER rstudio
 
-#RUN cd /tmp/ && curl -fsSLO https://repo.anaconda.com/miniconda/Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
-#    && bash Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
-#    -b \
-#    -p /opt/miniconda \
-#    && rm -f Miniconda3-${miniconda3_version}-Linux-x86_64.sh \
-#    && chown -R rstudio:rstudio /opt/miniconda \
-#    && chmod -R go-w /opt/miniconda
-
 RUN /opt/miniconda/bin/conda update -n base --yes conda \
     && /opt/miniconda/bin/conda config --append channels bioconda \
-    && /opt/miniconda/bin/conda install --yes conda-libmamba-solver \
-    && /opt/miniconda/bin/conda config --set solver libmamba \
     && /opt/miniconda/bin/conda install --file /tmp/requirements.txt -y \
     && /opt/miniconda/bin/conda clean -a
 
