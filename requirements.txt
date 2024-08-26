@@ -28,6 +28,7 @@ r-httr
 r-survival
 r-corrplot
 r-forecast
+r-haven
 r-rsqlite
 
 bioconductor-edger
