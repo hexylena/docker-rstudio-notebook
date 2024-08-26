@@ -16,9 +16,20 @@ r-maps
 r-pheatmap
 r-readr
 r-tidyr
-r-dplyr
 r-rjsonio
 r-knitr
+r-tidyverse
+r-readxl
+r-data.table
+r-reticulate
+r-cowplot
+r-heaven
+r-rmarkdown
+r-httr
+r-survival
+r-corrplot
+r-forecast
+r-sqlite
 
 bioconductor-edger
 bioconductor-gviz
