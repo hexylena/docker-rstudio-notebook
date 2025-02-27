@@ -2,8 +2,8 @@
 
 FROM rocker/rstudio:4.4
 
-ARG CONDA_VERSION=24.11.2
-ARG SUFFIX=1
+ARG CONDA_VERSION=25.1.1
+ARG SUFFIX=0
 ARG MINIFORGE_VERSION=${CONDA_VERSION}-${SUFFIX}
 ARG R_VERSION=4.4
 
@@ -69,7 +69,9 @@ ADD ./packages/ /tmp/packages/
 ADD ./logging.conf /etc/rstudio/
 
 # The Galaxy instance can copy in data that needs to be present to the Rstudio webserver
-RUN chmod 777 /import/
+RUN chmod 777 /import/ \
+    # Fix for OpenSSL library version mismatch: use system curl instead of conda curl
+    && ln -sf /usr/lib/x86_64-linux-gnu/libcurl.so.4 /opt/miniconda/lib/libcurl.so.4
 
 # the symlinks should be removed once the R scripts for gx_get/gx_put are smart enough to take the global put/get
 RUN sed -i 's|/usr/local/bin/R|/opt/miniconda/bin/R|g' /etc/rstudio/disable_auth_rserver.conf \
