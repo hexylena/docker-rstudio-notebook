@@ -1,11 +1,11 @@
 # RStudio container used for Galaxy RStudio Integration
 
-FROM rocker/rstudio:4.4
+FROM rocker/rstudio:4.5
 
-ARG CONDA_VERSION=24.11.2
-ARG SUFFIX=1
+ARG CONDA_VERSION=26.5.3
+ARG SUFFIX=0
 ARG MINIFORGE_VERSION=${CONDA_VERSION}-${SUFFIX}
-ARG R_VERSION=4.4
+ARG R_VERSION=4.5
 
 ENV CONDA_PATH=/opt/miniconda \
     MINICONDA_BIN_DIR="/opt/miniconda/bin" \
