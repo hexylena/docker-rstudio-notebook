@@ -36,7 +36,6 @@ bioconductor-gviz
 bioconductor-rgraphviz
 bioconductor-limma
 bioconductor-deseq2
-bioconductor-cummerbund
 bioconductor-affy
 bioconductor-rsamtools
 
