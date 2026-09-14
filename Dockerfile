@@ -73,6 +73,7 @@ RUN chmod 777 /import/
 
 # the symlinks should be removed once the R scripts for gx_get/gx_put are smart enough to take the global put/get
 RUN sed -i 's|/usr/local/bin/R|/opt/miniconda/bin/R|g' /etc/rstudio/disable_auth_rserver.conf \
+    && echo "rsession-ld-library-path=/opt/miniconda/lib" >> /etc/rstudio/disable_auth_rserver.conf \
     && ln -s /opt/miniconda/bin/get /usr/local/bin/get \
     && ln -s /opt/miniconda/bin/put /usr/local/bin/put
 
